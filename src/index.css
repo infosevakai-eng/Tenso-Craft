@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+/*
+  Tenso Craft brand theme.
+  Tailwind v4 uses CSS-based config -- these become utility classes
+  automatically, e.g. bg-brand-navy, text-brand-gold, font-heading.
+*/
+@theme {
+  --color-brand-navy: #0b1c2c;
+  --color-brand-navy-light: #16324a;
+  --color-brand-gold: #d9a441;
+  --color-brand-gold-light: #e8c98a;
+  --color-brand-cream: #f7f5f1;
+  --color-brand-ink: #101317;
+
+  --font-heading: "Poppins", "Segoe UI", system-ui, sans-serif;
+  --font-sans: "Inter", "Segoe UI", system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-brand-ink);
+  background: #ffffff;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+}
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}

@@ -1,0 +1,24 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Solutions -- open read/write (admin gating is client-side only via .env check)
+    match /solutions/{solutionId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Inquiries (contact form) -- create-only from client, no auth exists to gate read/delete
+    match /inquiries/{inquiryId} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+
+    // Site settings -- open read/write, same as solutions
+    match /siteSettings/{docId} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}
