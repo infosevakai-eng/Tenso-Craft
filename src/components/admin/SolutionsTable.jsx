@@ -302,7 +302,7 @@ export default function SolutionsTable() {
                               </Link>
                             )}
                             <Link
-                              to={`/admin/solutions/${solution.id}/edit`}
+                              to={`/admin/products/${solution.id}/edit`}
                               className="font-medium text-[#0b1c2c] hover:underline"
                             >
                               Edit
