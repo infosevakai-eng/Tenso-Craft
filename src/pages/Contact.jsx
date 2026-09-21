@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Clock, MapPin, Phone, Mail } from "lucide-react";
-import { addInquiry } from "../lib/firestore";
+import { addInquiry, getPublishedProductBySlug } from "../lib/firestore";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -18,6 +19,43 @@ export default function Contact() {
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle"); // idle | submitting | success | error
   const [errorMessage, setErrorMessage] = useState("");
+
+  // "Get a Quote" on a product page links here as /contact?product=<slug>.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const productSlug = searchParams.get("product");
+  const [product, setProduct] = useState(null); // { slug, title } of a real, published product
+
+  useEffect(() => {
+    if (!productSlug) {
+      setProduct(null);
+      return undefined;
+    }
+
+    let cancelled = false;
+    getPublishedProductBySlug(productSlug)
+      .then((found) => {
+        if (cancelled || !found) return;
+        setProduct({ slug: found.slug, title: found.title });
+        // Prefill the message, but never overwrite something the visitor already typed.
+        setForm((prev) =>
+          prev.message.trim()
+            ? prev
+            : { ...prev, message: `Hi, I'm interested in "${found.title}". Please share a quote.` }
+        );
+      })
+      .catch(() => {
+        // Not critical: the form still works as a normal contact form.
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [productSlug]);
+
+  function clearProduct() {
+    setProduct(null);
+    setSearchParams({}, { replace: true });
+  }
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -53,6 +91,7 @@ export default function Contact() {
         email: form.email.trim(),
         phone: form.phone.trim(),
         message: form.message.trim(),
+        ...(product ? { productSlug: product.slug, productTitle: product.title } : {}),
       });
       setStatus("success");
       setForm(initialForm);
@@ -167,6 +206,22 @@ export default function Contact() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} noValidate className="space-y-5">
+                  {product && (
+                    <div className="flex items-center justify-between gap-4 rounded-lg border border-brand-gold/40 bg-brand-cream/60 px-4 py-3 text-sm">
+                      <p className="text-brand-ink/70">
+                        Enquiring about:{" "}
+                        <span className="font-semibold text-brand-navy">{product.title}</span>
+                      </p>
+                      <button
+                        type="button"
+                        onClick={clearProduct}
+                        className="flex-none text-xs font-semibold text-brand-ink/60 underline hover:text-brand-navy"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  )}
+
                   <div>
                     <label htmlFor="name" className="text-sm font-medium text-brand-navy">
                       Name

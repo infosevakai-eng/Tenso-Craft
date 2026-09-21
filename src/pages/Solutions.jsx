@@ -1,21 +1,29 @@
-import { useEffect, useState } from "react";
-import { getSolutions } from "../lib/firestore";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { getCategories, getPublishedProducts } from "../lib/firestore";
 import SolutionCard from "../components/solutions/SolutionCard";
 
-const CATEGORY_LABELS = ["All", "Architectural", "Commercial", "Residential"];
+const PAGE_SIZE = 12;
 
 export default function Solutions() {
   const [solutions, setSolutions] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [status, setStatus] = useState("loading");
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
+  // The active category lives in the URL (?category=slug), so a filtered
+  // list can be shared or linked to (e.g. from a product page).
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requestedCategory = searchParams.get("category") || "";
 
   useEffect(() => {
     let cancelled = false;
 
-    getSolutions()
-      .then((data) => {
+    Promise.all([getPublishedProducts(), getCategories()])
+      .then(([productList, categoryList]) => {
         if (cancelled) return;
-        setSolutions(data);
+        setSolutions(productList);
+        setCategories(categoryList);
         setStatus("ready");
       })
       .catch(() => {
@@ -28,10 +36,36 @@ export default function Solutions() {
     };
   }, []);
 
-  const filtered =
-    activeCategory === "All"
-      ? solutions
-      : solutions.filter((s) => s.category === activeCategory);
+  // Only categories that have at least one published product get a chip.
+  const chips = useMemo(() => {
+    const counts = {};
+    solutions.forEach((s) => {
+      if (s.categorySlug) counts[s.categorySlug] = (counts[s.categorySlug] || 0) + 1;
+    });
+    return categories
+      .filter((c) => counts[c.slug] > 0)
+      .map((c) => ({ slug: c.slug, name: c.name, count: counts[c.slug] }));
+  }, [solutions, categories]);
+
+  // An unknown ?category= value just shows everything.
+  const activeSlug = chips.some((c) => c.slug === requestedCategory) ? requestedCategory : "";
+
+  const filtered = activeSlug
+    ? solutions.filter((s) => s.categorySlug === activeSlug)
+    : solutions;
+  const visible = filtered.slice(0, visibleCount);
+
+  function selectCategory(slug) {
+    setVisibleCount(PAGE_SIZE);
+    setSearchParams(slug ? { category: slug } : {}, { replace: true });
+  }
+
+  const chipClass = (active) =>
+    `rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+      active
+        ? "border-brand-gold bg-brand-gold text-brand-navy"
+        : "border-brand-navy/15 text-brand-ink/60 hover:border-brand-gold hover:text-brand-navy"
+    }`;
 
   return (
     <main>
@@ -56,20 +90,24 @@ export default function Solutions() {
 
       {/* Filter + Grid */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        {status === "ready" && solutions.length > 0 && (
+        {status === "ready" && chips.length > 0 && (
           <div className="mb-10 flex flex-wrap gap-2">
-            {CATEGORY_LABELS.map((cat) => (
+            <button
+              type="button"
+              onClick={() => selectCategory("")}
+              className={chipClass(activeSlug === "")}
+            >
+              All
+            </button>
+            {chips.map((chip) => (
               <button
-                key={cat}
+                key={chip.slug}
                 type="button"
-                onClick={() => setActiveCategory(cat)}
-                className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
-                  activeCategory === cat
-                    ? "border-brand-gold bg-brand-gold text-brand-navy"
-                    : "border-brand-navy/15 text-brand-ink/60 hover:border-brand-gold hover:text-brand-navy"
-                }`}
+                onClick={() => selectCategory(chip.slug)}
+                className={chipClass(activeSlug === chip.slug)}
               >
-                {cat}
+                {chip.name}
+                <span className="ml-1.5 text-xs opacity-60">{chip.count}</span>
               </button>
             ))}
           </div>
@@ -99,11 +137,25 @@ export default function Solutions() {
         )}
 
         {status === "ready" && filtered.length > 0 && (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {filtered.map((solution) => (
-              <SolutionCard key={solution.id} solution={solution} />
-            ))}
-          </div>
+          <>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {visible.map((solution) => (
+                <SolutionCard key={solution.id} solution={solution} />
+              ))}
+            </div>
+
+            {visible.length < filtered.length && (
+              <div className="mt-12 text-center">
+                <button
+                  type="button"
+                  onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
+                  className="rounded-full border border-brand-navy/20 px-6 py-3 text-sm font-semibold text-brand-navy transition-colors hover:border-brand-gold hover:text-brand-gold"
+                >
+                  Show more ({filtered.length - visible.length} remaining)
+                </button>
+              </div>
+            )}
+          </>
         )}
       </section>
     </main>

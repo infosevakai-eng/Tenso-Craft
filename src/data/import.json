@@ -1,0 +1,977 @@
+{
+    "products": [
+       
+        {
+            "title": "Lightweight Tensile Structures",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "Lightweight Tensile Structures offer strong yet minimal designs using tensioned fabric and steel. They are easy to install, cost-effective, and require low maintenance. Perfect for canopies, walkways, and outdoor shelters with modern appeal. Their flexibility allows creative shapes while ensuring durability and weather resistance.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "High Wind Resistance",
+                "Waterproof",
+                "UV Resistant",
+                "Anti-Fungal",
+                "Fire Retardant"
+            ],
+            "specs": {
+                "Application": "Outdoor",
+                "Shape": "Custom Shape",
+                "Fabric Type": "Premium Grade (e.g.; European - Serge Ferrari; Mehler)",
+                "Fabric Material": "PVC Coated",
+                "Fabric GSM": "900 GSM",
+                "Frame Material": "Mild Steel (MS)",
+                "Frame Coating": "PU Paint / Epoxy Paint",
+                "Warranty": "10 Years"
+            }
+        },
+        {
+            "title": "Modular PVC Ferrari Tensile Structure Shed",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "Modular PVC Ferrari Tensile Structure Shed is a premium-grade shading solution made with high-tensile Ferrari PVC fabric and a robust steel framework. Designed for durability, flexibility, and superior aesthetics, it offers excellent UV and weather protection. The modular system allows quick installation, expansion, and relocation as needed. Ideal for stadiums, amphitheaters, car parking, and outdoor event areas. Made in India with world-class materials ensuring long life and minimal maintenance.",
+            "priceValue": 300,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "Anti-Fungal",
+                "High Wind Resistance",
+                "Dirt Resistant Coating",
+                "UV Resistant",
+                "Waterproof",
+                "Fire Retardant"
+            ],
+            "specs": {
+                "Fabric Material": "PVC Coated",
+                "Fabric Type": "Premium Grade (e.g.; European - Serge Ferrari; Mehler)",
+                "Application": "Food Court / Outdoor Dining",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Frame Coating": "PU Paint / Epoxy Paint",
+                "Shape": "Conical / Pyramid"
+            }
+        },
+        {
+            "title": "Best Tensile Structure for Commercial Buildings",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "The best tensile structure for commercial buildings combines durability, aesthetics, and functionality. PVC-coated or PTFE fabric roofs are ideal for long-lasting performance and low maintenance. They provide excellent weather protection and natural light transmission. Perfect for malls, showrooms, restaurants, and entrance canopies with a modern architectural look.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "High Wind Resistance",
+                "Anti-Fungal",
+                "Fire Retardant",
+                "Dirt Resistant Coating",
+                "UV Resistant",
+                "Waterproof"
+            ],
+            "specs": {
+                "Shape": "Custom Shape",
+                "Fabric Material": "PVC Coated",
+                "Fabric Type": "Premium Grade (e.g.; European - Serge Ferrari; Mehler)",
+                "Application": "Commercial Building",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10 Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Frame Coating": "PU Paint / Epoxy Paint"
+            }
+        },
+        {
+            "title": "Tensile Structures Fabrication Work",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "We shall provide, fabricate, and install premium-grade tensile membrane structures of approved make, designed and manufactured to precise specifications using advanced technology. The work includes designing, cutting, patterning, and high-frequency/heat-weld stitching of the tensile fabric to ensure perfect tension and long-term durability. The tensile membrane will be installed over a structural steel framework, fabricated with high-quality mild steel (MS) or galvanized steel components. The framework will be cut, welded, and finished with protective coatings/paint to prevent corrosion and ensure structural stability.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": "300 sq ft",
+            "features": [],
+            "specs": {
+                "Shape": "Barrel Vault",
+                "Fabric Material": "PVC Coated",
+                "Fabric Type": "Premium Grade (e.g.; European - Serge Ferrari; Mehler)",
+                "Application": "outdoor",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Material": "PVC",
+                "Paint": "Duco, PU",
+                "Built Type": "Commercial",
+                "Waterproof": "Yes"
+            }
+        },
+        {
+            "title": "Outdoor Tensile Structures",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "Outdoor Tensile Structures offer stylish and functional weather protection for open spaces. Made from durable, UV-resistant fabrics supported by steel frames. They are ideal for gardens, cafes, walkways, and event areas. Lightweight, customizable, and low-maintenance, they enhance both comfort and aesthetics.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "Waterproof",
+                "Fire Retardant",
+                "Dirt Resistant Coating",
+                "Anti-Fungal",
+                "High Wind Resistance",
+                "UV Resistant"
+            ],
+            "specs": {
+                "Fabric Material": "PVC Coated",
+                "Fabric Type": "Premium Grade (e.g.; European - Serge Ferrari; Mehler)",
+                "Application": "Food Court / Outdoor Dining",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10 Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Frame Coating": "PU Paint / Epoxy Paint"
+            }
+        },
+        {
+            "title": "Tensile Roofing Structure",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "Tensile Roofing Structures provide strong, lightweight, and modern roofing solutions. They use tensioned fabric membranes supported by steel frameworks for maximum durability. Ideal for commercial, industrial, and recreational spaces. These roofs offer weather resistance, natural light, and an elegant architectural appearance.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "Waterproof",
+                "High Wind Resistance",
+                "Fire Retardant",
+                "Dirt Resistant Coating",
+                "Anti-Fungal",
+                "UV Resistant"
+            ],
+            "specs": {
+                "Shape": "Barrel Vault / Arch",
+                "Fabric Material": "PVC Coated",
+                "Fabric Type": "Premium Grade (e.g.; European - Serge Ferrari; Mehler)",
+                "Application": "Amphitheater / Auditorium",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10 Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Frame Coating": "PU Paint / Epoxy Paint"
+            }
+        },
+        {
+            "title": "Tensile structure for Garden or Terrace",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "Tensile Structures for Gardens or Terraces add shade, style, and comfort to outdoor spaces. Made from durable, UV-resistant fabrics supported by sturdy steel frames. They protect against sun and rain while maintaining an open, airy feel. Perfect for lounges, cafes, and residential rooftops with modern aesthetics.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "Waterproof"
+            ],
+            "specs": {
+                "Fabric Material": "PVC Coated",
+                "Fabric Type": "Premium Grade (e.g.; European - Serge Ferrari; Mehler)",
+                "Application": "Food Court / Outdoor Dining",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10 Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Frame Coating": "PU Paint / Epoxy Paint",
+                "Shape": "Conical / Pyramid"
+            }
+        },
+        {
+            "title": "PVC Tensile Structure Shade",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "PVC and FRP Tensile Structure Shade is a durable, lightweight, and aesthetically appealing roofing solution ideal for outdoor spaces. Made from premium PVC fabric and FRP components, it offers excellent weather, UV, and corrosion resistance. Its modular design ensures easy installation and low maintenance. Perfect for parking areas, walkways, terraces, and commercial spaces. Made in India with superior strength, flexibility, and long-lasting performance.",
+            "priceValue": 300,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "Anti-Fungal",
+                "UV Resistant",
+                "Fire Retardant",
+                "Waterproof"
+            ],
+            "specs": {
+                "Shape": "Barrel Vault / Arch",
+                "Fabric Material": "PVC Coated",
+                "Fabric Type": "Premium Grade (e.g.; European - Serge Ferrari; Mehler)",
+                "Application": "Walkway / Pathway",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Frame Coating": "Powder Coating"
+            }
+        },
+        {
+            "title": "Tensile Shade Structure",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "Tensile Shade Structures provide stylish and effective protection from sun and rain. They use tensioned fabric supported by steel frames for strength and flexibility. Ideal for car parks, gardens, playgrounds, and outdoor seating areas. Lightweight, durable, and visually appealing, they enhance both comfort and design.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "Fire Retardant",
+                "High Wind Resistance",
+                "Dirt Resistant Coating",
+                "Waterproof",
+                "Anti-Fungal",
+                "UV Resistant"
+            ],
+            "specs": {
+                "Shape": "Barrel Vault / Arch",
+                "Fabric Material": "PVC Coated",
+                "Fabric Type": "Premium Grade (e.g.; European - Serge Ferrari; Mehler)",
+                "Application": "Entrance Canopy",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10 Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Frame Coating": "PU Paint / Epoxy Paint"
+            }
+        },
+        {
+            "title": "Tensile Structure Installation",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "Tensile Structure Installation involves precise engineering and expert fabrication techniques. It includes foundation setup, steel frame erection, and membrane tensioning. Skilled professionals ensure accurate alignment and long-lasting performance. The result is a durable, visually appealing structure with minimal maintenance needs.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "Waterproof",
+                "Dirt Resistant Coating",
+                "High Wind Resistance",
+                "Fire Retardant",
+                "UV Resistant",
+                "Anti-Fungal"
+            ],
+            "specs": {
+                "Shape": "Custom Shape",
+                "Fabric Material": "PVC Coated",
+                "Fabric Type": "Premium Grade (e.g.; European - Serge Ferrari; Mehler)",
+                "Application": "Custom Use",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10 Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Frame Coating": "PU Paint / Epoxy Paint"
+            }
+        },
+        {
+            "title": "Custom Tensile fabric Structures",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "Custom Tensile Fabric Structures are designed to meet unique architectural and functional needs. They offer flexibility in shape, size, and color to match any space or design theme. Constructed with high-quality, weather-resistant fabrics and steel frameworks. Ideal for commercial, residential, and public spaces requiring both beauty and durability.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "Waterproof",
+                "Dirt Resistant Coating",
+                "Anti-Fungal",
+                "Fire Retardant",
+                "High Wind Resistance",
+                "UV Resistant"
+            ],
+            "specs": {
+                "Shape": "Barrel Vault / Arch",
+                "Fabric Material": "PVC Coated",
+                "Fabric Type": "Premium Grade (e.g.; European - Serge Ferrari; Mehler)",
+                "Application": "Food Court / Outdoor Dining",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10 Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Frame Coating": "PU Paint / Epoxy Paint"
+            }
+        },
+        {
+            "title": "Outdoor Tensile Structure",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "Tensile Membrane Structures are thin-shell structures used to provide shade and safety to spaces. They provide shade or shelter and help protect residential and commercial spaces from harmful sun rays, hail, snow, and heavy rains. They are widely installed in parks, gardens, parking areas, offices, hotels, auditoriums, schools, and other public spaces. These precisely crafted structures combine style and utility and are available in a range of designs, forms, thicknesses, and styles. Their lightweight and durable designs provide natural light, high stability, and resistance to UV rays.",
+            "priceValue": 300,
+            "priceUnit": "sq ft",
+            "moq": "1000 Square Feet",
+            "features": [],
+            "specs": {
+                "Fabric Material": "PVC Coated",
+                "Fabric Type": "Premium Grade (e.g.; European - Serge Ferrari; Mehler)",
+                "Application": "Amphitheater / Auditorium",
+                "Shape": "Tensile Membrane Structures Tensile Membrane Structures are thin-shell structures used to provide shade and safety to the spaces. They are sure to provide shade or shelter to the spaces and keep them protected against adverse weather conditions. These structures are ideal to keep the residential and commercial spaces safe from harmful sun rays, hail, snow, and heavy rains. They are widely installed in parks, gardens, parking areas, offices, hotels, auditoriums, schools and other public spaces. These precisely crafted Tensile Membrane Structures are the perfect combination of style and utility. They are available in a range of designs, forms, thickness and styles in lightweight and durable designs to provide the best results. They also ensure abundant natural light, high-stability and ability to withstand UV rays.",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Usage/Application": "Shop",
+                "Is It Waterproof": "Waterproof",
+                "Built Type": "Modular",
+                "Color": "White",
+                "Material": "PVC",
+                "Gsm": "700"
+            }
+        },
+        {
+            "title": "White Square Tensile Membrane Canopy Structure",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "Durable white tensile membrane canopy featuring a high-tension fabric roof and sturdy support frame. Designed for weather-resistant outdoor shading in commercial spaces, rooftops, and event areas. Provides excellent UV protection and architectural aesthetics.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [],
+            "specs": {
+                "Structure Type": "Atrium Roof, Canopy, Entrance Canopy",
+                "Fabric Material": "PVDF Coated Fabric, PVC Coated Fabric",
+                "Frame Material": "Mild Steel",
+                "Application": "Residential, Commercial, Industrial, Resort",
+                "Coverage Area": "1000 sq ft",
+                "Shape": "Conical, Pyramid",
+                "Fabric Thickness": "900 gsm",
+                "Waterproof": "Yes",
+                "UV Protection": "Yes",
+                "Installation Service": "Yes",
+                "Country Of Origin": "Made In India"
+            }
+        },
+        {
+            "title": "Tensile Stadium Roofing",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "A modern and lightweight roofing system made with high-strength steel and tensile fabric, designed to provide large-span, weather-resistant coverage for stadiums and sports arenas while ensuring unobstructed views and enhanced spectator comfort.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": "10 sq ft",
+            "features": [
+                "UV Resistant",
+                "Fire Retardant",
+                "Modular Design",
+                "Waterproof"
+            ],
+            "specs": {
+                "Shape": "Barrel Vault, Conical",
+                "Fabric Material": "PVC Coated",
+                "Application": "Amphitheater",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Fabric Brand": "Serge Ferrari",
+                "Protective Coating": "Painted",
+                "Structure Type": "Frame Supported"
+            }
+        },
+        {
+            "title": "Heavy Cantilever Tensile Structure",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "A heavy cantilever tensile structure is a robust and modern fabric canopy designed to provide large covered areas with minimal support columns. Constructed using heavy-duty steel and premium tensile fabric, it offers excellent strength, durability, and protection from sunlight and rain. Its cantilever design ensures maximum usable space and an attractive architectural appearance, making it ideal for car parking, commercial buildings, entrances, and outdoor public areas.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "High Wind Resistance",
+                "Fire Retardant"
+            ],
+            "specs": {
+                "Shape": "Conical, Hypar, Sail, Dome, Umbrella, Barrel Vault",
+                "Fabric Material": "PVC Coated",
+                "Application": "Entrance Canopy, Gazebo, Swimming Pool Cover, Food Court, Car Parking, Amphitheater, Rooftop, Walkway",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Protective Coating": "Painted",
+                "Structure Type": "Frame Supported"
+            }
+        },
+        {
+            "title": "Connecting Tensile Structure",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "A connecting tensile structure is a modern and durable fabric canopy designed to provide covered pathways between two buildings or spaces. Constructed with high-strength steel and premium tensile fabric, it offers excellent protection from sunlight and rain while enhancing the architectural appeal of the area. It is ideal for hotels, hospitals, schools, commercial complexes, and residential projects requiring sheltered connections between different sections.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "Anti-Fungal",
+                "Fire Retardant",
+                "High Wind Resistance",
+                "UV Resistant",
+                "Modular Design",
+                "Waterproof"
+            ],
+            "specs": {
+                "Shape": "Dome, Barrel Vault, Conical, Sail, Hypar, Umbrella",
+                "Fabric Material": "PTFE Coated",
+                "Application": "Rooftop, Gazebo, Amphitheater, Food Court, Walkway, Car Parking, Entrance Canopy, Swimming Pool Cover",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Fabric Brand": "Serge Ferrari",
+                "Protective Coating": "Painted",
+                "Structure Type": "Frame Supported"
+            }
+        },
+        {
+            "title": "Basement Ramp Area Tensile Structure",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "A basement ramp area tensile structure is a durable and modern fabric canopy designed to provide shade and weather protection over basement entry and exit ramps. Constructed with high-strength steel and premium tensile fabric, it protects vehicles and pedestrians from sunlight and rain while enhancing the architectural appearance of the building. It is an ideal solution for residential complexes, commercial buildings, malls, hospitals, and institutional premises.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "Waterproof",
+                "Anti-Fungal",
+                "Fire Retardant",
+                "Modular Design",
+                "High Wind Resistance",
+                "UV Resistant"
+            ],
+            "specs": {
+                "Shape": "Sail, Dome, Conical, Hypar, Umbrella, Barrel Vault",
+                "Fabric Material": "PVC Coated",
+                "Application": "Food Court, Gazebo, Rooftop, Amphitheater, Swimming Pool Cover, Walkway, Car Parking, Entrance Canopy",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Fabric Brand": "Serge Ferrari",
+                "Protective Coating": "Painted",
+                "Structure Type": "Frame Supported"
+            }
+        },
+        {
+            "title": "Custom Tensile Structure Solutions",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "Custom tensile structure solutions tailored to your specific design, space, and functional requirements, delivering innovative, durable, and aesthetically appealing shade structures for every project.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": "10 sq ft",
+            "features": [
+                "Waterproof",
+                "Fire Retardant"
+            ],
+            "specs": {
+                "Fabric Material": "PVC Coated",
+                "Application": "Food Court, Gazebo, Amphitheater, Car Parking, Swimming Pool Cover, Walkway, Entrance Canopy, Rooftop",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Fabric Brand": "Serge Ferrari",
+                "Protective Coating": "Painted",
+                "Structure Type": "Frame Supported"
+            }
+        },
+        {
+            "title": "Premium Modular Tensile Roofing Solutions",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "We provide premium modular tensile roofing solutions that combine modern design, durability, and functionality. Our customized structures are ideal for car parking, walkways, swimming pools, terraces, commercial spaces, and outdoor areas, delivering aesthetic appeal with superior weather protection.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "UV Resistant",
+                "Fire Retardant",
+                "Modular Design",
+                "Waterproof"
+            ],
+            "specs": {
+                "Fabric Material": "PVC Coated",
+                "Application": "Car Parking, Amphitheater, Walkway, Swimming Pool Cover, Gazebo, Entrance Canopy, Rooftop, Food Court",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Fabric Brand": "Serge Ferrari",
+                "Protective Coating": "Painted",
+                "Structure Type": "Frame Supported"
+            }
+        },
+        {
+            "title": "Commercial Tensile Structure",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "Commercial tensile structures designed to deliver durable, cost-effective, and visually appealing roofing and shading solutions for offices, malls, hotels, restaurants, industrial facilities, and other commercial spaces.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": "10 sq ft",
+            "features": [
+                "Fire Retardant",
+                "Waterproof"
+            ],
+            "specs": {
+                "Shape": "Conical",
+                "Fabric Material": "PVC Coated",
+                "Application": "Gazebo",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Fabric Brand": "Serge Ferrari",
+                "Protective Coating": "Painted",
+                "Structure Type": "Frame Supported"
+            }
+        },
+        {
+            "title": "Atrium Tensile Fabric Structure",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "Atrium tensile fabric structures are designed to create elegant, naturally lit, and weather-protected spaces, combining modern architecture with durable and aesthetically appealing roofing solutions for commercial and public buildings.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "Anti-Fungal",
+                "High Wind Resistance",
+                "Fire Retardant",
+                "Waterproof",
+                "Modular Design",
+                "UV Resistant"
+            ],
+            "specs": {
+                "Shape": "Sail, Umbrella, Barrel Vault, Conical, Dome, Hypar",
+                "Fabric Material": "PVC Coated",
+                "Application": "Amphitheater",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Structure Type": "Frame Supported"
+            }
+        },
+        {
+            "title": "Tensile Roofing for Commercial Buildings",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "Tensile roofing solutions for commercial buildings designed to provide durable, weather-resistant, and aesthetically appealing coverings that enhance functionality and create modern architectural spaces.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": "11 sq ft",
+            "features": [
+                "Fire Retardant",
+                "Anti-Fungal",
+                "High Wind Resistance"
+            ],
+            "specs": {
+                "Fabric Material": "PVC Coated",
+                "Application": "Entrance Canopy, Amphitheater, Swimming Pool Cover, Car Parking, Rooftop, Gazebo, Food Court, Walkway",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Fabric Brand": "Serge Ferrari",
+                "Protective Coating": "Painted",
+                "Structure Type": "Frame Supported"
+            }
+        },
+        {
+            "title": "Tensile Light Weight Structure",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "A modern, durable, and lightweight structural solution made with high-strength steel and tensile fabric, designed to provide aesthetically appealing, weather-resistant, and cost-effective coverage for commercial, residential, and public spaces.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "Anti-Fungal",
+                "UV Resistant",
+                "Waterproof",
+                "Modular Design",
+                "Fire Retardant"
+            ],
+            "specs": {
+                "Shape": "Dome, Umbrella, Hypar, Conical, Sail, Barrel Vault",
+                "Fabric Material": "PVC Coated",
+                "Application": "Amphitheater, Walkway, Food Court, Swimming Pool Cover, Car Parking, Gazebo, Rooftop, Entrance Canopy",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Fabric Brand": "Serge Ferrari",
+                "Protective Coating": "Painted",
+                "Structure Type": "Frame Supported"
+            }
+        },
+        {
+            "title": "Outdoor Tensile Fabric Structure",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "An outdoor tensile fabric structure is a lightweight and durable canopy system designed to provide shade and weather protection for open spaces. Constructed with high-strength steel and premium tensile fabric, it offers excellent UV resistance, waterproof performance, and a modern architectural appearance. It is ideal for parks, resorts, commercial areas, seating zones, and recreational spaces.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "Waterproof",
+                "Modular Design",
+                "Anti-Fungal",
+                "UV Resistant",
+                "High Wind Resistance",
+                "Fire Retardant"
+            ],
+            "specs": {
+                "Shape": "Barrel Vault, Sail, Umbrella, Dome, Hypar, Conical",
+                "Fabric Material": "PVC Coated",
+                "Application": "Car Parking, Entrance Canopy, Amphitheater, Food Court, Gazebo, Walkway, Swimming Pool Cover, Rooftop",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Fabric Brand": "Serge Ferrari",
+                "Protective Coating": "Painted",
+                "Structure Type": "Frame Supported"
+            }
+        },
+        {
+            "title": "Waterproof Canopy Tensile Fabric Structure",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "A waterproof canopy tensile fabric structure is a durable and stylish shade solution designed to provide complete protection from rain, sunlight, and harsh weather conditions. Constructed with high-strength steel and premium waterproof tensile fabric, it offers excellent UV resistance, long-lasting performance, and a modern architectural appearance. It is ideal for car parking, walkways, entrances, outdoor seating areas, and commercial spaces.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "UV Resistant",
+                "Waterproof",
+                "Modular Design",
+                "High Wind Resistance",
+                "Fire Retardant",
+                "Anti-Fungal"
+            ],
+            "specs": {
+                "Shape": "Sail, Conical, Barrel Vault, Dome, Hypar, Umbrella",
+                "Fabric Material": "PVC Coated",
+                "Application": "Swimming Pool Cover, Walkway, Car Parking, Amphitheater, Rooftop, Food Court, Gazebo, Entrance Canopy",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Fabric Brand": "Serge Ferrari",
+                "Protective Coating": "Painted",
+                "Structure Type": "Frame Supported"
+            }
+        },
+        {
+            "title": "Tensile Roofing System",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "Tensile roofing systems are innovative, lightweight, and durable roofing solutions designed to provide superior weather protection, architectural elegance, and long-lasting performance for residential, commercial, and industrial applications.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": "10 sq ft",
+            "features": [
+                "Waterproof",
+                "Modular Design",
+                "UV Resistant",
+                "Fire Retardant"
+            ],
+            "specs": {
+                "Fabric Material": "PVC Coated",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Fabric Brand": "Serge Ferrari",
+                "Protective Coating": "Painted",
+                "Structure Type": "Frame Supported"
+            }
+        },
+        {
+            "title": "Terrace Cover Tensile Structure",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "Terrace cover tensile structures provide stylish, durable, and weather-resistant roofing solutions, transforming open terraces into comfortable and functional spaces for residential, commercial, and hospitality applications.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "Waterproof",
+                "Fire Retardant",
+                "UV Resistant",
+                "Modular Design"
+            ],
+            "specs": {
+                "Fabric Material": "PVC Coated",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Fabric Brand": "Serge Ferrari",
+                "Protective Coating": "Painted",
+                "Structure Type": "Cable Supported, Frame Supported"
+            }
+        },
+        {
+            "title": "Genset Tensile Shed Covering",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "Genset tensile shed coverings are durable and weather-resistant structures designed to protect generator sets from sun, rain, and harsh environmental conditions while ensuring proper ventilation and an aesthetically pleasing appearance.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "High Wind Resistance",
+                "Modular Design",
+                "Fire Retardant",
+                "Anti-Fungal"
+            ],
+            "specs": {
+                "Fabric Material": "PVC Coated",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Fabric Brand": "Serge Ferrari",
+                "Protective Coating": "Painted",
+                "Structure Type": "Frame Supported"
+            }
+        },
+        {
+            "title": "Sports Stadium Tensile Structure",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "A modern, lightweight roofing solution made of high-strength steel and tensile fabric, designed to provide durable, weather-resistant, and aesthetically appealing coverage for stadiums and sports arenas while ensuring unobstructed views and maximum spectator comfort.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": "10 sq ft",
+            "features": [
+                "Fire Retardant"
+            ],
+            "specs": {
+                "Shape": "Conical, Barrel Vault",
+                "Fabric Material": "PVC Coated",
+                "Application": "Rooftop, Amphitheater",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Fabric Brand": "Serge Ferrari",
+                "Protective Coating": "Painted",
+                "Structure Type": "Cable Supported, Frame Supported"
+            }
+        },
+        {
+            "title": "Restaurant Tensile Structure",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "A modern and attractive canopy solution made with high-strength steel and tensile fabric, designed to create comfortable, weather-protected dining spaces while enhancing the ambiance and visual appeal of restaurants, cafés, and outdoor seating areas.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "UV Resistant",
+                "Anti-Fungal",
+                "High Wind Resistance",
+                "Waterproof",
+                "Modular Design",
+                "Fire Retardant"
+            ],
+            "specs": {
+                "Shape": "Barrel Vault, Conical",
+                "Fabric Material": "PVC Coated",
+                "Application": "Gazebo, Rooftop, Car Parking, Food Court, Amphitheater",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Fabric Brand": "Serge Ferrari",
+                "Protective Coating": "Painted",
+                "Structure Type": "Frame Supported"
+            }
+        },
+        {
+            "title": "Cut Out Tensile Structure",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "Cut-out tensile structures are uniquely designed architectural shade solutions featuring customized openings and creative forms, offering exceptional aesthetics, durability, and weather protection for modern commercial and residential spaces.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "UV Resistant",
+                "Fire Retardant",
+                "Modular Design",
+                "Waterproof"
+            ],
+            "specs": {
+                "Fabric Material": "PVC Coated",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Fabric Brand": "Serge Ferrari",
+                "Protective Coating": "Painted",
+                "Structure Type": "Frame Supported"
+            }
+        },
+        {
+            "title": "High Quality Tensile Structures",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "High-quality tensile structures crafted with premium materials and precision engineering, delivering durable, aesthetically appealing, and long-lasting shade solutions for every application.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "Fire Retardant",
+                "Anti-Fungal",
+                "Modular Design",
+                "UV Resistant",
+                "Waterproof"
+            ],
+            "specs": {
+                "Fabric Material": "PVC Coated",
+                "Application": "Car Parking, Walkway, Amphitheater, Swimming Pool Cover, Rooftop, Entrance Canopy, Food Court, Gazebo",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Fabric Brand": "Serge Ferrari",
+                "Protective Coating": "Painted",
+                "Structure Type": "Frame Supported"
+            }
+        },
+        {
+            "title": "School Tensile Shed",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "A durable and aesthetically designed shading solution made with high-strength steel and tensile fabric, providing weather protection and comfortable covered spaces for school entrances, playgrounds, assembly areas, and walkways.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "UV Resistant",
+                "High Wind Resistance",
+                "Modular Design",
+                "Anti-Fungal",
+                "Fire Retardant",
+                "Waterproof"
+            ],
+            "specs": {
+                "Shape": "Barrel Vault, Conical",
+                "Fabric Material": "PVC Coated",
+                "Application": "Walkway, Gazebo, Swimming Pool Cover, Rooftop, Entrance Canopy, Food Court, Amphitheater, Car Parking",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Fabric Brand": "Serge Ferrari",
+                "Protective Coating": "Painted",
+                "Structure Type": "Frame Supported, Cable Supported"
+            }
+        },
+        {
+            "title": "Marriage Hall Tensile Structure",
+            "category": "Tensile Structure",
+            "legacyCategories": [
+                "Tensile Structure"
+            ],
+            "importSource": "tensocraft.com-2026",
+            "fullDescription": "An elegant and durable roofing solution made with high-strength steel and tensile fabric, designed to create spacious, weather-protected venues for weddings and events while enhancing the aesthetic appeal of marriage halls and banquet spaces.",
+            "priceValue": 250,
+            "priceUnit": "sq ft",
+            "moq": null,
+            "features": [
+                "High Wind Resistance",
+                "Anti-Fungal",
+                "Waterproof",
+                "Fire Retardant",
+                "UV Resistant",
+                "Modular Design"
+            ],
+            "specs": {
+                "Shape": "Conical",
+                "Fabric Material": "PVC Coated",
+                "Application": "Food Court, Amphitheater",
+                "Fabric GSM": "900 GSM",
+                "Warranty": "10+ Years",
+                "Frame Material": "Mild Steel (MS)",
+                "Fabric Brand": "Serge Ferrari",
+                "Protective Coating": "Painted",
+                "Structure Type": "Frame Supported"
+            }
+        }
+    ]
+}

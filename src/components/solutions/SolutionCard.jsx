@@ -1,7 +1,16 @@
 import { Link } from "react-router-dom";
 import { optimizedUrl } from "../../lib/cloudinary";
+import { formatPrice } from "../../lib/format";
 
 export default function SolutionCard({ solution }) {
+  const price = formatPrice(solution.priceValue, solution.priceUnit);
+
+  // Imported products often have no short description yet -- show their first
+  // few features instead of leaving the card body empty.
+  const summary =
+    solution.shortDescription ||
+    (Array.isArray(solution.features) ? solution.features.slice(0, 3).join(" · ") : "");
+
   return (
     <Link
       to={`/solutions/${solution.slug}`}
@@ -13,6 +22,8 @@ export default function SolutionCard({ solution }) {
           <img
             src={optimizedUrl(solution.imageUrl)}
             alt={solution.title}
+            loading="lazy"
+            decoding="async"
             className="h-full w-full rounded-lg object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
@@ -32,9 +43,14 @@ export default function SolutionCard({ solution }) {
         <h3 className="mt-1.5 font-heading text-base font-semibold text-brand-navy">
           {solution.title}
         </h3>
-        <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-brand-ink/60">
-          {solution.shortDescription}
-        </p>
+        {summary && (
+          <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-brand-ink/60">
+            {summary}
+          </p>
+        )}
+        {price && (
+          <p className="mt-3 text-sm font-semibold text-brand-navy">{price}</p>
+        )}
       </div>
     </Link>
   );

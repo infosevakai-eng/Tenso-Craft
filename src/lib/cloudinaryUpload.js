@@ -21,6 +21,8 @@ function folderSegment(text) {
 
 // TensoCraft/<category>/<solution-slug>
 // No category -> TensoCraft/uncategorized/<solution-slug>
+// Pass the category SLUG here (not the display name) so renaming a category
+// never changes where new files go.
 export function buildSolutionFolder(category, solutionSlug) {
   const categorySegment = folderSegment(category) || NO_CATEGORY_FOLDER;
   const productSegment = folderSegment(solutionSlug) || "untitled";
@@ -28,7 +30,8 @@ export function buildSolutionFolder(category, solutionSlug) {
 }
 
 // Unsigned upload straight from the browser. Resolves to the secure_url.
-export async function uploadToFolder(file, folder) {
+// resourceType: "image" for photos, "auto" lets Cloudinary accept PDFs too.
+async function uploadFile(file, folder, resourceType) {
   if (!CLOUD_NAME || !UPLOAD_PRESET) {
     throw new Error(
       "Cloudinary is not configured (VITE_CLOUDINARY_CLOUD_NAME / VITE_CLOUDINARY_UPLOAD_PRESET)."
@@ -41,7 +44,7 @@ export async function uploadToFolder(file, folder) {
   body.append("folder", folder);
 
   const res = await fetch(
-    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${resourceType}/upload`,
     { method: "POST", body }
   );
   const data = await res.json().catch(() => ({}));
@@ -50,7 +53,17 @@ export async function uploadToFolder(file, folder) {
     throw new Error(data?.error?.message || `Upload failed (HTTP ${res.status}).`);
   }
   if (!data.secure_url) {
-    throw new Error("Upload finished but Cloudinary returned no image URL.");
+    throw new Error("Upload finished but Cloudinary returned no file URL.");
   }
   return data.secure_url;
+}
+
+// Photos (main image, gallery, category cover).
+export function uploadToFolder(file, folder) {
+  return uploadFile(file, folder, "image");
+}
+
+// PDF brochures.
+export function uploadPdfToFolder(file, folder) {
+  return uploadFile(file, folder, "auto");
 }

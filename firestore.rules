@@ -1,24 +1,38 @@
 rules_version = '2';
 
+// No Firebase Auth in this project (admin login is a client-side .env check),
+// so rules can't tell an admin from anyone else. Collections are open by design.
+// The only guard added below: a product/category's `slug` field must equal its
+// document id, so id and slug can never drift apart.
+
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Solutions -- open read/write (admin gating is client-side only via .env check)
-    match /solutions/{solutionId} {
-      allow read: if true;
-      allow write: if true;
+    // Current data. Document id = slug.
+    match /products/{slug} {
+      allow read, delete: if true;
+      allow create, update: if request.resource.data.slug == slug;
     }
 
-    // Inquiries (contact form) -- create-only from client, no auth exists to gate read/delete
-    match /inquiries/{inquiryId} {
+    match /categories/{slug} {
+      allow read, delete: if true;
+      allow create, update: if request.resource.data.slug == slug;
+    }
+
+    // Legacy collection (random ids). Kept open only until the migration is
+    // verified; then delete the collection in the console and remove this block.
+    match /solutions/{id} {
+      allow read, write: if true;
+    }
+
+    match /siteSettings/{id} {
+      allow read, write: if true;
+    }
+
+    // Contact form: anyone can submit, nobody can read/edit/delete from the client.
+    match /inquiries/{id} {
       allow create: if true;
       allow read, update, delete: if false;
-    }
-
-    // Site settings -- open read/write, same as solutions
-    match /siteSettings/{docId} {
-      allow read: if true;
-      allow write: if true;
     }
   }
 }

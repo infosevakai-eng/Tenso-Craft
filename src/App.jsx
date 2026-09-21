@@ -23,6 +23,9 @@ const SolutionDetail = lazy(() => import("./pages/SolutionDetail"));
 const AdminLogin = lazy(() => import("./pages/admin/AdminLogin"));
 const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
 const AdminSolutionEdit = lazy(() => import("./pages/admin/AdminSolutionEdit"));
+const AdminCategories = lazy(() => import("./pages/admin/AdminCategories"));
+const AdminCategoryEdit = lazy(() => import("./pages/admin/AdminCategoryEdit"));
+const AdminImport = lazy(() => import("./pages/admin/AdminImport"));
 
 function PageLoader() {
   return (
@@ -52,8 +55,8 @@ export default function App() {
           <Route path="/about" element={<Page><About /></Page>} />
           <Route path="/contact" element={<Page><Contact /></Page>} />
           <Route path="/privacy-policy" element={<Page><PrivacyPolicy /></Page>} />
-          <Route path="/solutions" element={<Page><Solutions /></Page>} />
-          <Route path="/solutions/:slug" element={<Page><SolutionDetail /></Page>} />
+          <Route path="/products" element={<Page><Solutions /></Page>} />
+          <Route path="/products/:slug" element={<Page><SolutionDetail /></Page>} />
           <Route path="*" element={<NotFound />} />
         </Route>
 
@@ -64,8 +67,15 @@ export default function App() {
         <Route element={<ProtectedRoute />}>
           <Route element={<AdminLayout />}>
             <Route path="/admin" element={<Page><AdminDashboard /></Page>} />
-            <Route path="/admin/solutions/new" element={<Page><AdminSolutionEdit /></Page>} />
-            <Route path="/admin/solutions/:id/edit" element={<Page><AdminSolutionEdit /></Page>} />
+            {/* In the URLs below, :id is the product slug (Firestore doc id = slug) */}
+            <Route path="/admin/products/new" element={<Page><AdminSolutionEdit /></Page>} />
+            <Route path="/admin/products/:id/edit" element={<Page><AdminSolutionEdit /></Page>} />
+
+            <Route path="/admin/categories" element={<Page><AdminCategories /></Page>} />
+            <Route path="/admin/categories/new" element={<Page><AdminCategoryEdit /></Page>} />
+            <Route path="/admin/categories/:slug/edit" element={<Page><AdminCategoryEdit /></Page>} />
+
+            <Route path="/admin/import" element={<Page><AdminImport /></Page>} />
           </Route>
         </Route>
       </Routes>

@@ -4,7 +4,7 @@ import logo from "../../assets/images/logo.webp";
 const QUICK_LINKS = [
   { label: "Home", to: "/" },
   { label: "About", to: "/about" },
-  { label: "Solutions", to: "/solutions" },
+  { label: "Products", to: "/products" },
   { label: "Contact", to: "/contact" },
 ];
 

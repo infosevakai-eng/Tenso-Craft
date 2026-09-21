@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { getFeaturedSolutions } from "../../lib/firestore";
+import { getFeaturedProducts } from "../../lib/firestore";
 import SolutionCard from "../solutions/SolutionCard";
 
 export default function SolutionsGrid() {
@@ -11,14 +11,15 @@ export default function SolutionsGrid() {
 
   useEffect(() => {
     let cancelled = false;
-    getFeaturedSolutions()
+    // Featured AND published products only.
+    getFeaturedProducts()
       .then((data) => {
         if (cancelled) return;
         setSolutions(data);
         setStatus("ready");
       })
       .catch((err) => {
-        console.error("SOLUTIONS ERROR:", err.code, err.message); // TEMP debug -- remove after fixing
+        console.error("Could not load featured solutions:", err);
         if (cancelled) return;
         setStatus("error");
       });
@@ -32,7 +33,7 @@ export default function SolutionsGrid() {
   function scrollByCard(direction) {
     const el = scrollerRef.current;
     if (!el) return;
-    const cardWidth = el.querySelector("[data-card]")?.offsetWidth ?? 280;
+    const cardWidth = el.querySelector("[data-card]")?.offsetWidth ?? 384;
     el.scrollBy({ left: direction * (cardWidth + 24), behavior: "smooth" });
   }
 
@@ -41,7 +42,7 @@ export default function SolutionsGrid() {
       <div className="flex flex-wrap items-end justify-between gap-4 border-b border-brand-navy/10 pb-6">
         <div>
           <p className="text-sm font-medium uppercase tracking-widest text-brand-gold">
-            Our Solutions
+            Our Products
           </p>
           <h2 className="mt-2 font-heading text-3xl font-semibold text-brand-navy sm:text-4xl">
             Tensile Solutions for Every Space
@@ -77,14 +78,14 @@ export default function SolutionsGrid() {
             to="/solutions"
             className="whitespace-nowrap text-sm font-semibold text-brand-navy underline underline-offset-4 hover:text-brand-gold"
           >
-            View All Solutions →
+            View All Products →
           </Link>
         </div>
       </div>
 
       {status === "loading" && (
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-          {Array.from({ length: 5 }).map((_, i) => (
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 3 }).map((_, i) => (
             <div
               key={i}
               className="aspect-[4/5] animate-pulse rounded-xl bg-brand-cream/60"
@@ -106,7 +107,7 @@ export default function SolutionsGrid() {
       )}
 
       {status === "ready" && solutions.length > 0 && !isCarousel && (
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {solutions.map((solution) => (
             <SolutionCard key={solution.id} solution={solution} />
           ))}
@@ -124,7 +125,7 @@ export default function SolutionsGrid() {
               <div
                 key={solution.id}
                 data-card
-                className="w-64 flex-shrink-0"
+                className="w-96 flex-shrink-0"
                 style={{ scrollSnapAlign: "start" }}
               >
                 <SolutionCard solution={solution} />
