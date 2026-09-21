@@ -75,7 +75,7 @@ export default function SolutionsGrid() {
             </div>
           )}
           <Link
-            to="/solutions"
+            to="/products"
             className="whitespace-nowrap text-sm font-semibold text-brand-navy underline underline-offset-4 hover:text-brand-gold"
           >
             View All Products →

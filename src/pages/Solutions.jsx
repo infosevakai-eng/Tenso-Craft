@@ -75,10 +75,10 @@ export default function Solutions() {
         <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
             <p className="text-sm font-medium uppercase tracking-widest text-brand-gold-light">
-              Our Solutions
+              Our Products    
             </p>
             <h1 className="mt-3 font-heading text-4xl font-semibold text-white sm:text-5xl">
-              Tensile Solutions for Every Space
+              Tensile Products for Every Space
             </h1>
             <p className="mt-4 text-white/70">
               From car parks to walkways to full architectural structures --
@@ -126,13 +126,13 @@ export default function Solutions() {
 
         {status === "error" && (
           <p className="text-sm text-red-600">
-            Couldn't load solutions right now. Please refresh the page.
+            Couldn't load products right now. Please refresh the page.
           </p>
         )}
 
         {status === "ready" && filtered.length === 0 && (
           <p className="text-sm text-brand-ink/60">
-            No solutions found in this category.
+            No products found in this category.
           </p>
         )}
 

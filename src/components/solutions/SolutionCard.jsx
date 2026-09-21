@@ -13,7 +13,7 @@ export default function SolutionCard({ solution }) {
 
   return (
     <Link
-      to={`/solutions/${solution.slug}`}
+      to={`/products/${solution.slug}`}
       className="group block overflow-hidden rounded-2xl border border-brand-navy/10 bg-white transition-shadow hover:shadow-lg"
     >
       {/* Image, contained with padding like a product shot */}

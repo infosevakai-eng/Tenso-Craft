@@ -123,7 +123,7 @@ export default function AdminSolutionEdit() {
         const target = findNextNeedingImage(updatedList, finalSlug);
         setSaving(false);
         window.scrollTo({ top: 0 });
-        navigate(target ? `/admin/solutions/${target}/edit` : "/admin");
+        navigate(target ? `/admin/products/${target}/edit` : "/admin");
         return;
       }
 
@@ -150,7 +150,7 @@ export default function AdminSolutionEdit() {
         <p className="font-medium text-slate-900">Solution not found</p>
         <p className="mt-1 text-sm text-slate-500">It may have been deleted.</p>
         <Link to="/admin" className="mt-4 inline-block text-sm font-medium text-[#0b1c2c] hover:underline">
-          Back to solutions
+          Back to products
         </Link>
       </div>
     );
@@ -201,10 +201,10 @@ export default function AdminSolutionEdit() {
   return (
     <div className="mx-auto max-w-4xl px-6 py-10">
       <Link to="/admin" className="text-sm text-slate-500 hover:text-slate-900">
-        ← Back to solutions
+        ← Back to products
       </Link>
       <h1 className="mb-6 mt-3 text-2xl font-semibold text-slate-900">
-        {isEdit ? "Edit Solution" : "Add Solution"}
+        {isEdit ? "Edit Product" : "Add Product"}
       </h1>
       {content}
     </div>
