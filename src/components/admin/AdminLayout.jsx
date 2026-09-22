@@ -32,7 +32,7 @@ export default function AdminLayout() {
       <div className="border-b border-slate-200 bg-white">
         <nav
           aria-label="Admin sections"
-          className="mx-auto flex max-w-7xl gap-6 px-4 sm:px-6 lg:px-8"
+          className="mx-auto flex max-w-container gap-6 px-4 sm:px-6 lg:px-8"
         >
           {TABS.map((tab) => {
             const active = tab.match(pathname);

@@ -38,7 +38,7 @@ export default function SolutionsGrid() {
   }
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+    <section className="mx-auto max-w-container px-4 py-24 sm:px-6 lg:px-8">
       <div className="flex flex-wrap items-end justify-between gap-4 border-b border-brand-navy/10 pb-6">
         <div>
           <p className="text-sm font-medium uppercase tracking-widest text-brand-gold">

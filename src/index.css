@@ -15,8 +15,8 @@
 
   --font-heading: "Poppins", "Segoe UI", system-ui, sans-serif;
   --font-sans: "Inter", "Segoe UI", system-ui, sans-serif;
+   --max-width-container: 1320px;
 }
-
 html {
   scroll-behavior: smooth;
 }

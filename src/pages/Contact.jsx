@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Clock, MapPin, Phone, Mail } from "lucide-react";
+import emailjs from "@emailjs/browser";
 import { addInquiry, getPublishedProductBySlug } from "../lib/firestore";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -13,6 +14,10 @@ const NEXT_STEPS = [
   { step: "3", title: "Get a quote", description: "You receive a clear, transparent quote -- no hidden costs." },
   { step: "4", title: "Design to install", description: "Once confirmed, we handle fabrication and on-site installation end to end." },
 ];
+
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 export default function Contact() {
   const [form, setForm] = useState(initialForm);
@@ -85,20 +90,38 @@ export default function Contact() {
     setStatus("submitting");
     setErrorMessage("");
 
+    const payload = {
+      name: form.name.trim(),
+      email: form.email.trim(),
+      phone: form.phone.trim(),
+      message: form.message.trim(),
+      ...(product ? { productSlug: product.slug, productTitle: product.title } : {}),
+    };
+
     try {
-      await addInquiry({
-        name: form.name.trim(),
-        email: form.email.trim(),
-        phone: form.phone.trim(),
-        message: form.message.trim(),
-        ...(product ? { productSlug: product.slug, productTitle: product.title } : {}),
-      });
+      // Save to Firestore (existing behaviour, kept as a record/backup).
+      await addInquiry(payload);
+
+      // Send an email notification via EmailJS.
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: payload.name,
+          from_email: payload.email,
+          phone: payload.phone,
+          message: payload.message,
+          product: product?.title || "General enquiry",
+        },
+        { publicKey: EMAILJS_PUBLIC_KEY }
+      );
+
       setStatus("success");
       setForm(initialForm);
     } catch (err) {
       setStatus("error");
       setErrorMessage(
-        err?.message || "Something went wrong sending your message. Please try again."
+        err?.text || err?.message || "Something went wrong sending your message. Please try again."
       );
     }
   }
@@ -107,7 +130,7 @@ export default function Contact() {
     <main>
       {/* Hero */}
       <section className="bg-brand-navy">
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-container px-4 py-20 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
             <p className="text-sm font-medium uppercase tracking-widest text-brand-gold-light">
               Get in Touch
@@ -124,7 +147,7 @@ export default function Contact() {
       </section>
 
       {/* Info + Form */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-container px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-5">
           {/* Contact info */}
           <div className="lg:col-span-2">
@@ -137,7 +160,6 @@ export default function Contact() {
                 <MapPin className="mt-0.5 h-5 w-5 flex-none text-brand-gold" strokeWidth={1.75} />
                 <div>
                   <dt className="font-medium text-brand-navy">Address</dt>
-                  {/* TODO: confirm exact address to display publicly */}
                   <dd className="mt-1">Fatehpur Beri, New Delhi, India</dd>
                 </div>
               </div>
@@ -146,8 +168,14 @@ export default function Contact() {
                 <Phone className="mt-0.5 h-5 w-5 flex-none text-brand-gold" strokeWidth={1.75} />
                 <div>
                   <dt className="font-medium text-brand-navy">Phone</dt>
-                  {/* TODO: add real phone number */}
-                  <dd className="mt-1">[Add phone number]</dd>
+                  <dd className="mt-1">
+                    <a href="tel:+919599145624" className="block hover:text-brand-gold">
+                      +91 95991 45624
+                    </a>
+                    <a href="tel:+919999353943" className="block hover:text-brand-gold">
+                      +91 99993 53943
+                    </a>
+                  </dd>
                 </div>
               </div>
 
@@ -155,8 +183,11 @@ export default function Contact() {
                 <Mail className="mt-0.5 h-5 w-5 flex-none text-brand-gold" strokeWidth={1.75} />
                 <div>
                   <dt className="font-medium text-brand-navy">Email</dt>
-                  {/* TODO: add real email address */}
-                  <dd className="mt-1">[Add email address]</dd>
+                  <dd className="mt-1">
+                    <a href="mailto:tensocraftdelhi@gmail.com" className="hover:text-brand-gold">
+                      tensocraftdelhi@gmail.com
+                    </a>
+                  </dd>
                 </div>
               </div>
 
@@ -164,7 +195,6 @@ export default function Contact() {
                 <Clock className="mt-0.5 h-5 w-5 flex-none text-brand-gold" strokeWidth={1.75} />
                 <div>
                   <dt className="font-medium text-brand-navy">Working Hours</dt>
-                  {/* TODO: confirm real working hours */}
                   <dd className="mt-1">Mon -- Sat, 10:00 AM -- 6:30 PM</dd>
                 </div>
               </div>
@@ -177,9 +207,10 @@ export default function Contact() {
               <p className="mt-1 text-sm text-brand-ink/60">
                 Reach us directly on WhatsApp for a faster response.
               </p>
-              {/* TODO: replace # with real WhatsApp link once phone number is confirmed */}
               <a
-                href="#"
+                href="https://wa.me/919599145624"
+                target="_blank"
+                rel="noreferrer"
                 className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-gold hover:text-brand-navy"
               >
                 Message on WhatsApp →
@@ -302,7 +333,7 @@ export default function Contact() {
 
       {/* What happens next */}
       <section className="border-t border-brand-ink/10 bg-brand-navy/[0.03] py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-container px-4 sm:px-6 lg:px-8">
           <p className="text-sm font-medium uppercase tracking-widest text-brand-gold">
             The Process
           </p>

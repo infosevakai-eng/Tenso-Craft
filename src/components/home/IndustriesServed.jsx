@@ -5,7 +5,7 @@ const INDUSTRIES = [
 
 export default function IndustriesServed() {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+    <section className="mx-auto max-w-container px-4 py-20 sm:px-6 lg:px-8">
       <p className="text-sm font-medium uppercase tracking-widest text-brand-gold">
         Industries We Serve
       </p>

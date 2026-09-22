@@ -11,7 +11,7 @@ export default function ProcessBanner() {
       />
       <div className="absolute inset-0 bg-brand-navy/80" />
 
-      <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-container px-4 py-24 sm:px-6 lg:px-8">
         <p className="text-sm font-medium uppercase tracking-widest text-brand-gold-light">
           Turning Ideas Into Iconic Spaces
         </p>

@@ -5,6 +5,11 @@ import SolutionCard from "../components/solutions/SolutionCard";
 
 const PAGE_SIZE = 12;
 
+const DEFAULT_TAG = "Our Products";
+const DEFAULT_TITLE = "Tensile Products for Every Space";
+const DEFAULT_DESCRIPTION =
+  "From car parks to walkways to full architectural structures -- engineered, fabricated and installed end to end.";
+
 export default function Solutions() {
   const [solutions, setSolutions] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -47,8 +52,14 @@ export default function Solutions() {
       .map((c) => ({ slug: c.slug, name: c.name, count: counts[c.slug] }));
   }, [solutions, categories]);
 
-  // An unknown ?category= value just shows everything.
-  const activeSlug = chips.some((c) => c.slug === requestedCategory) ? requestedCategory : "";
+  // Valid against ALL categories (not just ones with products), so a
+  // category page with zero products still shows that category -- not "All".
+  const activeSlug = categories.some((c) => c.slug === requestedCategory)
+    ? requestedCategory
+    : "";
+  const activeCategory = activeSlug
+    ? categories.find((c) => c.slug === activeSlug)
+    : null;
 
   const filtered = activeSlug
     ? solutions.filter((s) => s.categorySlug === activeSlug)
@@ -67,29 +78,33 @@ export default function Solutions() {
         : "border-brand-navy/15 text-brand-ink/60 hover:border-brand-gold hover:text-brand-navy"
     }`;
 
+  const heroTag = activeCategory ? "Category" : DEFAULT_TAG;
+  const heroTitle = activeCategory ? activeCategory.name : DEFAULT_TITLE;
+  const heroDescription =
+    activeCategory && activeCategory.description
+      ? activeCategory.description
+      : DEFAULT_DESCRIPTION;
+
   return (
     <main>
       {/* Hero */}
       <section className="relative overflow-hidden bg-brand-navy">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(212,175,55,0.12),transparent_60%)]" />
-        <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-container px-4 py-20 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
             <p className="text-sm font-medium uppercase tracking-widest text-brand-gold-light">
-              Our Products    
+              {heroTag}
             </p>
             <h1 className="mt-3 font-heading text-4xl font-semibold text-white sm:text-5xl">
-              Tensile Products for Every Space
+              {heroTitle}
             </h1>
-            <p className="mt-4 text-white/70">
-              From car parks to walkways to full architectural structures --
-              engineered, fabricated and installed end to end.
-            </p>
+            <p className="mt-4 text-white/70">{heroDescription}</p>
           </div>
         </div>
       </section>
 
       {/* Filter + Grid */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-container px-4 py-16 sm:px-6 lg:px-8">
         {status === "ready" && chips.length > 0 && (
           <div className="mb-10 flex flex-wrap gap-2">
             <button

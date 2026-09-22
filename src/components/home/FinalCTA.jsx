@@ -12,7 +12,7 @@ export default function FinalCTA() {
       />
       <div className="absolute inset-0 bg-brand-navy/85" />
 
-      <div className="relative mx-auto max-w-7xl px-4 py-24 text-center sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-container px-4 py-24 text-center sm:px-6 lg:px-8">
         <h2 className="font-heading text-3xl font-semibold text-white sm:text-4xl">
           Let's Build Something Extraordinary.
         </h2>

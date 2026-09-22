@@ -7,7 +7,7 @@ export default function About() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-brand-navy">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(212,175,55,0.12),transparent_60%)]" />
-        <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-container px-4 py-20 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
             <p className="text-sm font-medium uppercase tracking-widest text-brand-gold-light">
               Who We Are
@@ -36,7 +36,7 @@ export default function About() {
       </section>
 
       {/* What We Do */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-container px-4 py-20 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-xl lg:order-2">
             <img

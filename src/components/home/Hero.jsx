@@ -4,7 +4,7 @@ import heroImage from "../../assets/images/hero.webp";
 export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-brand-navy">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:items-center lg:py-28 lg:px-8">
+      <div className="mx-auto grid max-w-container gap-10 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:items-center lg:py-28 lg:px-8">
         <div>
           <p className="text-sm font-medium uppercase tracking-widest text-brand-gold-light">
             Architecture Meets Innovation

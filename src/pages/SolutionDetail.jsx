@@ -79,7 +79,7 @@ export default function SolutionDetail() {
 
   if (status === "loading") {
     return (
-      <main className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-container px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-2">
           <div className="aspect-[3/2] animate-pulse rounded-2xl bg-brand-cream" />
           <div className="space-y-4">
@@ -131,7 +131,7 @@ export default function SolutionDetail() {
 
   return (
     <main>
-      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-container px-4 py-12 sm:px-6 lg:px-8">
         <Link
           to="/products"
           className="inline-flex items-center gap-1.5 text-sm text-brand-ink/60 hover:text-brand-navy"

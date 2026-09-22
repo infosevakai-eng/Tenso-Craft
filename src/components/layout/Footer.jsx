@@ -13,7 +13,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-brand-navy text-white/80">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-container px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-4">
           {/* Brand */}
           <div>
@@ -54,9 +54,22 @@ export default function Footer() {
               Contact Us
             </h4>
             <ul className="mt-4 space-y-2 text-sm text-white/60">
-              <li>+91 00000 00000</li>
-              <li>info@tensocraft.com</li>
-              <li>Prayagraj, Uttar Pradesh, India</li>
+              <li>
+                <a href="tel:+919599145624" className="hover:text-brand-gold">
+                  +91 95991 45624
+                </a>
+              </li>
+              <li>
+                <a href="tel:+919999353943" className="hover:text-brand-gold">
+                  +91 99993 53943
+                </a>
+              </li>
+              <li>
+                <a href="mailto:tensocraftdelhi@gmail.com" className="hover:text-brand-gold">
+                  tensocraftdelhi@gmail.com
+                </a>
+              </li>
+              <li>Fatehpur Beri, New Delhi, India</li>
             </ul>
           </div>
 
