@@ -7,7 +7,7 @@ export default function AdminDashboard() {
       <div className="mb-8 flex items-center justify-between gap-4">
         <h1 className="font-heading text-3xl font-semibold text-brand-navy">Products</h1>
         <Link
-          to="/admin/solutions/new"
+          to="/admin/products/new"
           className="rounded-full bg-brand-gold px-5 py-2.5 text-sm font-semibold text-brand-navy transition-colors hover:bg-brand-gold-light"
         >
           + Add Product
