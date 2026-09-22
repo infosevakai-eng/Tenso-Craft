@@ -1,56 +1,56 @@
 import { Link } from "react-router-dom";
-import { optimizedUrl } from "../../lib/cloudinary";
-import { formatPrice } from "../../lib/format";
 
 export default function SolutionCard({ solution }) {
-  const price = formatPrice(solution.priceValue, solution.priceUnit);
-
-  // Imported products often have no short description yet -- show their first
-  // few features instead of leaving the card body empty.
-  const summary =
-    solution.shortDescription ||
-    (Array.isArray(solution.features) ? solution.features.slice(0, 3).join(" · ") : "");
+  const {
+    slug,
+    title,
+    category,
+    imageUrl,
+    features = [],
+    priceValue,
+    priceUnit,
+  } = solution;
 
   return (
     <Link
-      to={`/products/${solution.slug}`}
-      className="group block overflow-hidden rounded-2xl border border-brand-navy/10 bg-white transition-shadow hover:shadow-lg"
+      to={`/products/${slug}`}
+      className="flex h-full w-full flex-col overflow-hidden rounded-xl border border-brand-navy/10 bg-white shadow-sm transition-shadow hover:shadow-md"
     >
-      {/* Image, contained with padding like a product shot */}
-      <div className="aspect-[3/2] w-full overflow-hidden bg-brand-cream/60 p-4">
-        {solution.imageUrl ? (
+      <div className="aspect-[4/3] w-full overflow-hidden bg-brand-cream/60">
+        {imageUrl && (
           <img
-            src={optimizedUrl(solution.imageUrl)}
-            alt={solution.title}
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full rounded-lg object-cover transition-transform duration-500 group-hover:scale-105"
+            src={imageUrl}
+            alt={title}
+            className="h-full w-full object-cover"
           />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center rounded-lg text-xs text-brand-ink/40">
-            No image
-          </div>
         )}
       </div>
 
-      {/* Content */}
-      <div className="px-5 py-4">
-        {solution.category && (
-          <p className="text-xs font-medium uppercase tracking-wide text-brand-gold">
-            {solution.category}
+      <div className="flex flex-1 flex-col p-4">
+        {category && (
+          <p className="text-xs font-semibold uppercase tracking-wide text-brand-gold">
+            {category}
           </p>
         )}
-        <h3 className="mt-1.5 font-heading text-base font-semibold text-brand-navy">
-          {solution.title}
+
+        <h3 className="mt-1 font-heading text-lg font-semibold text-brand-navy">
+          {title}
         </h3>
-        {summary && (
-          <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-brand-ink/60">
-            {summary}
+
+        {features.length > 0 && (
+          <p className="mt-2 text-sm text-brand-ink/60">
+            {features.join(" · ")}
           </p>
         )}
-        {price && (
-          <p className="mt-3 text-sm font-semibold text-brand-navy">{price}</p>
-        )}
+
+        {/* spacer pushes price to the bottom regardless of text length above */}
+        <div className="mt-auto pt-3">
+          {priceValue && (
+            <p className="font-semibold text-brand-navy">
+              Approx. ₹{priceValue} / {priceUnit}
+            </p>
+          )}
+        </div>
       </div>
     </Link>
   );

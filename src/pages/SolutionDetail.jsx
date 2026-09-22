@@ -33,7 +33,7 @@ export default function SolutionDetail() {
         setSolution(data);
         setStatus("ready");
 
-        // Related solutions: other published products in the same category
+        // Related products: other published products in the same category
         if (data.categorySlug) {
           getPublishedProducts()
             .then((all) => {
@@ -96,10 +96,10 @@ export default function SolutionDetail() {
     return (
       <main className="mx-auto max-w-4xl px-4 py-24 text-center sm:px-6 lg:px-8">
         <h1 className="font-heading text-3xl font-semibold text-brand-navy">
-          Solution not found
+          Product not found
         </h1>
-        <Link to="/solutions" className="mt-4 inline-block text-brand-gold underline">
-          ← Back to all solutions
+        <Link to="/products" className="mt-4 inline-block text-brand-gold underline">
+          ← Back to all products
         </Link>
       </main>
     );
@@ -109,7 +109,7 @@ export default function SolutionDetail() {
     return (
       <main className="mx-auto max-w-4xl px-4 py-24 sm:px-6 lg:px-8">
         <p className="text-sm text-red-600">
-          Couldn't load this solution right now. Please refresh the page.
+          Couldn't load this product right now. Please refresh the page.
         </p>
       </main>
     );
@@ -133,11 +133,11 @@ export default function SolutionDetail() {
     <main>
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
         <Link
-          to="/solutions"
+          to="/products"
           className="inline-flex items-center gap-1.5 text-sm text-brand-ink/60 hover:text-brand-navy"
         >
           <ArrowLeft className="h-4 w-4" strokeWidth={2} />
-          Back to all solutions
+          Back to all products
         </Link>
 
         {/* Product-style layout: images left, content right */}
@@ -191,8 +191,8 @@ export default function SolutionDetail() {
               <Link
                 to={
                   solution.categorySlug
-                    ? `/solutions?category=${encodeURIComponent(solution.categorySlug)}`
-                    : "/solutions"
+                    ? `/products?category=${encodeURIComponent(solution.categorySlug)}`
+                    : "/products"
                 }
                 className="text-sm font-medium uppercase tracking-widest text-brand-gold hover:text-brand-navy"
               >
@@ -239,7 +239,7 @@ export default function SolutionDetail() {
             {/* CTA block */}
             <div className="mt-8 rounded-xl bg-brand-cream p-6">
               <p className="font-heading text-lg font-semibold text-brand-navy">
-                Interested in this solution?
+                Interested in this product?
               </p>
               <div className="mt-4 flex flex-wrap items-center gap-3">
                 <Link
@@ -292,7 +292,7 @@ export default function SolutionDetail() {
             {solution.fullDescription && (
               <div className="mt-10 border-t border-brand-navy/10 pt-8">
                 <h2 className="font-heading text-xl font-semibold text-brand-navy">
-                  About this solution
+                  About this product
                 </h2>
                 <p className="mt-4 whitespace-pre-line leading-relaxed text-brand-ink/70">
                   {solution.fullDescription}
@@ -302,7 +302,7 @@ export default function SolutionDetail() {
           </div>
         </div>
 
-        {/* Related solutions -- same category */}
+        {/* Related products -- same category */}
         {related.length > 0 && (
           <div className="mt-16 border-t border-brand-navy/10 pt-12">
             <div className="flex items-end justify-between gap-4">
@@ -314,45 +314,52 @@ export default function SolutionDetail() {
                   More in {solution.category}
                 </h2>
               </div>
-
-              {related.length > 3 && (
-                <div className="hidden gap-2 sm:flex">
-                  <button
-                    type="button"
-                    onClick={() => scrollByCard(-1)}
-                    aria-label="Scroll left"
-                    className="rounded-full border border-brand-navy/15 p-2 text-brand-navy transition-colors hover:border-brand-gold hover:text-brand-gold"
-                  >
-                    <ChevronLeft className="h-4 w-4" strokeWidth={2} />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => scrollByCard(1)}
-                    aria-label="Scroll right"
-                    className="rounded-full border border-brand-navy/15 p-2 text-brand-navy transition-colors hover:border-brand-gold hover:text-brand-gold"
-                  >
-                    <ChevronRight className="h-4 w-4" strokeWidth={2} />
-                  </button>
-                </div>
-              )}
             </div>
 
-            <div
-              ref={scrollerRef}
-              className="mt-8 flex gap-6 overflow-x-auto scroll-smooth pb-2"
-              style={{ scrollSnapType: "x mandatory" }}
-            >
-              {related.map((item) => (
-                <div
-                  key={item.id}
-                  data-card
-                  className="w-64 flex-shrink-0"
-                  style={{ scrollSnapAlign: "start" }}
+            {related.length > 3 ? (
+              <div className="relative mt-8">
+                <button
+                  type="button"
+                  onClick={() => scrollByCard(-1)}
+                  aria-label="Scroll left"
+                  className="absolute left-0 top-1/2 z-10 hidden -translate-x-4 -translate-y-1/2 rounded-full border border-brand-navy/15 bg-white p-2 text-brand-navy shadow-md transition-colors hover:border-brand-gold hover:text-brand-gold sm:flex"
                 >
-                  <SolutionCard solution={item} />
+                  <ChevronLeft className="h-4 w-4" strokeWidth={2} />
+                </button>
+
+                <div
+                  ref={scrollerRef}
+                  className="flex gap-6 overflow-x-auto scroll-smooth pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                  style={{ scrollSnapType: "x mandatory" }}
+                >
+                  {related.map((item) => (
+                    <div
+                      key={item.id}
+                      data-card
+                      className="w-64 flex-shrink-0"
+                      style={{ scrollSnapAlign: "start" }}
+                    >
+                      <SolutionCard solution={item} />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+
+                <button
+                  type="button"
+                  onClick={() => scrollByCard(1)}
+                  aria-label="Scroll right"
+                  className="absolute right-0 top-1/2 z-10 hidden -translate-y-1/2 translate-x-4 rounded-full border border-brand-navy/15 bg-white p-2 text-brand-navy shadow-md transition-colors hover:border-brand-gold hover:text-brand-gold sm:flex"
+                >
+                  <ChevronRight className="h-4 w-4" strokeWidth={2} />
+                </button>
+              </div>
+            ) : (
+              <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {related.map((item) => (
+                  <SolutionCard key={item.id} solution={item} />
+                ))}
+              </div>
+            )}
           </div>
         )}
       </section>

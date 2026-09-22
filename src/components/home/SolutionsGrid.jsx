@@ -53,34 +53,12 @@ export default function SolutionsGrid() {
           </p>
         </div>
 
-        <div className="flex items-center gap-4">
-          {isCarousel && (
-            <div className="hidden gap-2 lg:flex">
-              <button
-                type="button"
-                onClick={() => scrollByCard(-1)}
-                aria-label="Scroll left"
-                className="rounded-full border border-brand-navy/15 p-2 text-brand-navy transition-colors hover:border-brand-gold hover:text-brand-gold"
-              >
-                <ChevronLeft className="h-4 w-4" strokeWidth={2} />
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollByCard(1)}
-                aria-label="Scroll right"
-                className="rounded-full border border-brand-navy/15 p-2 text-brand-navy transition-colors hover:border-brand-gold hover:text-brand-gold"
-              >
-                <ChevronRight className="h-4 w-4" strokeWidth={2} />
-              </button>
-            </div>
-          )}
-          <Link
-            to="/products"
-            className="whitespace-nowrap text-sm font-semibold text-brand-navy underline underline-offset-4 hover:text-brand-gold"
-          >
-            View All Products →
-          </Link>
-        </div>
+        <Link
+          to="/solutions"
+          className="whitespace-nowrap text-sm font-semibold text-brand-navy underline underline-offset-4 hover:text-brand-gold"
+        >
+          View All Products →
+        </Link>
       </div>
 
       {status === "loading" && (
@@ -107,7 +85,7 @@ export default function SolutionsGrid() {
       )}
 
       {status === "ready" && solutions.length > 0 && !isCarousel && (
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {solutions.map((solution) => (
             <SolutionCard key={solution.id} solution={solution} />
           ))}
@@ -116,24 +94,46 @@ export default function SolutionsGrid() {
 
       {isCarousel && (
         <>
-          <div
-            ref={scrollerRef}
-            className="mt-10 hidden gap-6 overflow-x-auto scroll-smooth pb-2 lg:flex"
-            style={{ scrollSnapType: "x mandatory" }}
-          >
-            {solutions.map((solution) => (
-              <div
-                key={solution.id}
-                data-card
-                className="w-96 flex-shrink-0"
-                style={{ scrollSnapAlign: "start" }}
-              >
-                <SolutionCard solution={solution} />
-              </div>
-            ))}
+          {/* Desktop: arrows sit beside the card row, scrollbar hidden */}
+          <div className="relative mt-10 hidden lg:block">
+            <button
+              type="button"
+              onClick={() => scrollByCard(-1)}
+              aria-label="Scroll left"
+              className="absolute left-0 top-1/2 z-10 -translate-x-4 -translate-y-1/2 rounded-full border border-brand-navy/15 bg-white p-2 text-brand-navy shadow-md transition-colors hover:border-brand-gold hover:text-brand-gold"
+            >
+              <ChevronLeft className="h-4 w-4" strokeWidth={2} />
+            </button>
+
+            <div
+              ref={scrollerRef}
+              className="flex items-stretch gap-6 overflow-x-auto scroll-smooth pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              style={{ scrollSnapType: "x mandatory" }}
+            >
+              {solutions.map((solution) => (
+                <div
+                  key={solution.id}
+                  data-card
+                  className="flex w-96 flex-shrink-0"
+                  style={{ scrollSnapAlign: "start" }}
+                >
+                  <SolutionCard solution={solution} />
+                </div>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => scrollByCard(1)}
+              aria-label="Scroll right"
+              className="absolute right-0 top-1/2 z-10 -translate-y-1/2 translate-x-4 rounded-full border border-brand-navy/15 bg-white p-2 text-brand-navy shadow-md transition-colors hover:border-brand-gold hover:text-brand-gold"
+            >
+              <ChevronRight className="h-4 w-4" strokeWidth={2} />
+            </button>
           </div>
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:hidden">
+          {/* Mobile/tablet: plain grid, no arrows */}
+          <div className="mt-10 grid items-stretch gap-6 sm:grid-cols-2 lg:hidden">
             {solutions.map((solution) => (
               <SolutionCard key={solution.id} solution={solution} />
             ))}
