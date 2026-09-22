@@ -103,7 +103,7 @@ export default function Contact() {
       await addInquiry(payload);
 
       // Send an email notification via EmailJS.
-            // Send an email notification via EmailJS.
+      // Send an email notification via EmailJS.
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
@@ -165,7 +165,7 @@ export default function Contact() {
                 <MapPin className="mt-0.5 h-5 w-5 flex-none text-brand-gold" strokeWidth={1.75} />
                 <div>
                   <dt className="font-medium text-brand-navy">Address</dt>
-                  <dd className="mt-1">Fatehpur Beri, New Delhi, India</dd>
+                  <dd className="mt-1">F-144/C5, Khasra No. 1024, Fatehpur Beri Extn. New Delhi -110074</dd>
                 </div>
               </div>
 
@@ -361,6 +361,19 @@ export default function Contact() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+      {/* Map -- full width, no container padding so it bleeds edge to edge */}
+      <section className="w-full">
+        <div className="aspect-[16/9] w-full sm:aspect-[16/5]">
+          <iframe
+            title="Tenso Craft location map"
+            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3507.815697284435!2d77.17507907549432!3d28.4549716757622!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjjCsDI3JzE3LjkiTiA3N8KwMTAnMzkuNiJF!5e0!3m2!1sen!2sin!4v1790077939473!5m2!1sen!2sin"
+            className="h-full w-full border-0"
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="strict-origin-when-cross-origin"
+          />
         </div>
       </section>
     </main>
