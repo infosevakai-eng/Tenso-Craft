@@ -16,8 +16,6 @@ export default function Solutions() {
   const [status, setStatus] = useState("loading");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
-  // The active category lives in the URL (?category=slug), so a filtered
-  // list can be shared or linked to (e.g. from a product page).
   const [searchParams, setSearchParams] = useSearchParams();
   const requestedCategory = searchParams.get("category") || "";
 
@@ -41,7 +39,6 @@ export default function Solutions() {
     };
   }, []);
 
-  // Only categories that have at least one published product get a chip.
   const chips = useMemo(() => {
     const counts = {};
     solutions.forEach((s) => {
@@ -52,8 +49,6 @@ export default function Solutions() {
       .map((c) => ({ slug: c.slug, name: c.name, count: counts[c.slug] }));
   }, [solutions, categories]);
 
-  // Valid against ALL categories (not just ones with products), so a
-  // category page with zero products still shows that category -- not "All".
   const activeSlug = categories.some((c) => c.slug === requestedCategory)
     ? requestedCategory
     : "";
@@ -71,11 +66,11 @@ export default function Solutions() {
     setSearchParams(slug ? { category: slug } : {}, { replace: true });
   }
 
-  const chipClass = (active) =>
-    `rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+  const sidebarItemClass = (active) =>
+    `flex w-full items-start justify-between gap-3 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${
       active
-        ? "border-brand-gold bg-brand-gold text-brand-navy"
-        : "border-brand-navy/15 text-brand-ink/60 hover:border-brand-gold hover:text-brand-navy"
+        ? "bg-brand-gold text-brand-navy"
+        : "text-brand-ink/70 hover:bg-brand-cream hover:text-brand-navy"
     }`;
 
   const heroTag = activeCategory ? "Category" : DEFAULT_TAG;
@@ -103,75 +98,124 @@ export default function Solutions() {
         </div>
       </section>
 
-      {/* Filter + Grid */}
-      <section className="mx-auto max-w-container px-4 py-16 sm:px-6 lg:px-8">
-        {status === "ready" && chips.length > 0 && (
-          <div className="mb-10 flex flex-wrap gap-2">
-            <button
-              type="button"
-              onClick={() => selectCategory("")}
-              className={chipClass(activeSlug === "")}
+      {/* Mobile category dropdown — hidden on desktop */}
+      {status === "ready" && chips.length > 0 && (
+        <div className="mx-auto max-w-container px-4 pt-8 sm:px-6 md:hidden">
+          <label htmlFor="category-select" className="sr-only">
+            Filter by category
+          </label>
+          <div className="relative">
+            <select
+              id="category-select"
+              value={activeSlug}
+              onChange={(e) => selectCategory(e.target.value)}
+              className="w-full appearance-none rounded-lg border border-brand-navy/15 bg-white px-4 py-3 pr-10 text-sm font-medium text-brand-navy shadow-sm focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold/30"
             >
-              All
-            </button>
-            {chips.map((chip) => (
-              <button
-                key={chip.slug}
-                type="button"
-                onClick={() => selectCategory(chip.slug)}
-                className={chipClass(activeSlug === chip.slug)}
-              >
-                {chip.name}
-                <span className="ml-1.5 text-xs opacity-60">{chip.count}</span>
-              </button>
-            ))}
-          </div>
-        )}
-
-        {status === "loading" && (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div
-                key={i}
-                className="aspect-[3/4] animate-pulse rounded-2xl bg-brand-cream/60"
-              />
-            ))}
-          </div>
-        )}
-
-        {status === "error" && (
-          <p className="text-sm text-red-600">
-            Couldn't load products right now. Please refresh the page.
-          </p>
-        )}
-
-        {status === "ready" && filtered.length === 0 && (
-          <p className="text-sm text-brand-ink/60">
-            No products found in this category.
-          </p>
-        )}
-
-        {status === "ready" && filtered.length > 0 && (
-          <>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {visible.map((solution) => (
-                <SolutionCard key={solution.id} solution={solution} />
+              <option value="">All Products ({solutions.length})</option>
+              {chips.map((chip) => (
+                <option key={chip.slug} value={chip.slug}>
+                  {chip.name} ({chip.count})
+                </option>
               ))}
-            </div>
+            </select>
+            <svg
+              className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-brand-ink/40"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+      )}
 
-            {visible.length < filtered.length && (
-              <div className="mt-12 text-center">
+      {/* Sidebar + Grid */}
+      <section className="mx-auto max-w-container px-4 py-16 sm:px-6 lg:px-8">
+        <div className="flex gap-10">
+          {/* Category sidebar — desktop only */}
+          {status === "ready" && chips.length > 0 && (
+            <aside className="hidden w-64 shrink-0 md:block">
+              <div className="sticky top-24 space-y-1">
+                <p className="mb-3 px-4 text-xs font-semibold uppercase tracking-widest text-brand-ink/40">
+                  Categories
+                </p>
                 <button
                   type="button"
-                  onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
-                  className="rounded-full border border-brand-navy/20 px-6 py-3 text-sm font-semibold text-brand-navy transition-colors hover:border-brand-gold hover:text-brand-gold"
+                  onClick={() => selectCategory("")}
+                  className={sidebarItemClass(activeSlug === "")}
                 >
-                  Show more ({filtered.length - visible.length} remaining)
+                  <span className="flex-1 text-left leading-snug">All Products</span>
+                  <span className="shrink-0 pt-0.5 text-xs opacity-60">
+                    {solutions.length}
+                  </span>
                 </button>
+                {chips.map((chip) => (
+                  <button
+                    key={chip.slug}
+                    type="button"
+                    onClick={() => selectCategory(chip.slug)}
+                    className={sidebarItemClass(activeSlug === chip.slug)}
+                  >
+                    <span className="flex-1 text-left leading-snug">{chip.name}</span>
+                    <span className="shrink-0 pt-0.5 text-xs opacity-60">
+                      {chip.count}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </aside>
+          )}
+
+          {/* Products */}
+          <div className="min-w-0 flex-1">
+            {status === "loading" && (
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="aspect-[3/4] animate-pulse rounded-2xl bg-brand-cream/60"
+                  />
+                ))}
               </div>
             )}
-          </>
-        )}
+
+            {status === "error" && (
+              <p className="text-sm text-red-600">
+                Couldn't load products right now. Please refresh the page.
+              </p>
+            )}
+
+            {status === "ready" && filtered.length === 0 && (
+              <p className="text-sm text-brand-ink/60">
+                No products found in this category.
+              </p>
+            )}
+
+            {status === "ready" && filtered.length > 0 && (
+              <>
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {visible.map((solution) => (
+                    <SolutionCard key={solution.id} solution={solution} />
+                  ))}
+                </div>
+
+                {visible.length < filtered.length && (
+                  <div className="mt-12 text-center">
+                    <button
+                      type="button"
+                      onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
+                      className="rounded-full border border-brand-navy/20 px-6 py-3 text-sm font-semibold text-brand-navy transition-colors hover:border-brand-gold hover:text-brand-gold"
+                    >
+                      Show more ({filtered.length - visible.length} remaining)
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        </div>
       </section>
     </main>
   );

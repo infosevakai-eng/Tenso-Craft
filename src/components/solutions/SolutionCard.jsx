@@ -1,15 +1,27 @@
 import { Link } from "react-router-dom";
 
+const ABOUT_WORD_LIMIT = 12;
+
+function truncateWords(text, limit) {
+  if (!text) return "";
+  const words = text.trim().split(/\s+/);
+  if (words.length <= limit) return text.trim();
+  return words.slice(0, limit).join(" ") + "...";
+}
+
 export default function SolutionCard({ solution }) {
   const {
     slug,
     title,
     category,
     imageUrl,
-    features = [],
+    shortDescription,
+    fullDescription,
     priceValue,
     priceUnit,
   } = solution;
+
+  const about = shortDescription || fullDescription;
 
   return (
     <Link
@@ -37,9 +49,9 @@ export default function SolutionCard({ solution }) {
           {title}
         </h3>
 
-        {features.length > 0 && (
+        {about && (
           <p className="mt-2 text-sm text-brand-ink/60">
-            {features.join(" · ")}
+            {truncateWords(about, ABOUT_WORD_LIMIT)}
           </p>
         )}
 
