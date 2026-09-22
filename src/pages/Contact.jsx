@@ -103,6 +103,7 @@ export default function Contact() {
       await addInquiry(payload);
 
       // Send an email notification via EmailJS.
+            // Send an email notification via EmailJS.
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
@@ -112,6 +113,10 @@ export default function Contact() {
           phone: payload.phone,
           message: payload.message,
           product: product?.title || "General enquiry",
+          time: new Date().toLocaleString("en-IN", {
+            dateStyle: "medium",
+            timeStyle: "short",
+          }),
         },
         { publicKey: EMAILJS_PUBLIC_KEY }
       );
