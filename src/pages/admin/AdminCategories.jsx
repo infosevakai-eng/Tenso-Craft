@@ -2,24 +2,25 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   deleteCategory,
-  getCategories,
+  getCategoryTree,
   getCategoryProductCounts,
 } from "../../lib/firestore";
 
 export default function AdminCategories() {
-  const [categories, setCategories] = useState([]);
+  const [tree, setTree] = useState([]);
   const [counts, setCounts] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [deletingSlug, setDeletingSlug] = useState(null);
+  const [collapsed, setCollapsed] = useState(() => new Set());
 
   useEffect(() => {
     let cancelled = false;
 
-    Promise.all([getCategories(), getCategoryProductCounts()])
-      .then(([list, countMap]) => {
+    Promise.all([getCategoryTree(), getCategoryProductCounts()])
+      .then(([groups, countMap]) => {
         if (cancelled) return;
-        setCategories(list);
+        setTree(groups);
         setCounts(countMap);
       })
       .catch((err) => {
@@ -35,6 +36,15 @@ export default function AdminCategories() {
     };
   }, []);
 
+  const toggleCollapsed = (slug) => {
+    setCollapsed((prev) => {
+      const next = new Set(prev);
+      if (next.has(slug)) next.delete(slug);
+      else next.add(slug);
+      return next;
+    });
+  };
+
   const handleDelete = async (category) => {
     const confirmed = window.confirm(
       `Delete the category "${category.name}"? This cannot be undone.`
@@ -45,14 +55,49 @@ export default function AdminCategories() {
     setDeletingSlug(category.slug);
     try {
       await deleteCategory(category.slug);
-      setCategories((prev) => prev.filter((c) => c.slug !== category.slug));
+      setTree((prev) =>
+        prev
+          .filter((p) => p.slug !== category.slug)
+          .map((p) => ({
+            ...p,
+            subCategories: p.subCategories.filter((c) => c.slug !== category.slug),
+          }))
+      );
     } catch (err) {
       console.error(err);
-      // deleteCategory throws a readable message when the category still has products.
       setError(err?.message || `Could not delete "${category.name}". Please try again.`);
     } finally {
       setDeletingSlug(null);
     }
+  };
+
+  const subCountFor = (slug) => counts[slug] || 0;
+  // A parent's own count = sum of its sub-categories' product counts
+  // (products always point at a sub-category, never at the parent directly).
+  const parentCountFor = (parent) =>
+    parent.subCategories.reduce((sum, c) => sum + subCountFor(c.slug), 0);
+
+  const rowActions = (category, blockDelete) => {
+    const isDeleting = deletingSlug === category.slug;
+    return (
+      <div className="flex items-center justify-end gap-4">
+        <Link
+          to={`/admin/categories/${category.slug}/edit`}
+          className="font-medium text-[#0b1c2c] hover:underline"
+        >
+          Edit
+        </Link>
+        <button
+          type="button"
+          onClick={() => handleDelete(category)}
+          disabled={isDeleting || blockDelete}
+          title={blockDelete ? "Move or delete what's underneath it first" : undefined}
+          className="font-medium text-red-600 hover:underline disabled:cursor-not-allowed disabled:opacity-40 disabled:no-underline"
+        >
+          {isDeleting ? "Deleting…" : "Delete"}
+        </button>
+      </div>
+    );
   };
 
   return (
@@ -75,7 +120,7 @@ export default function AdminCategories() {
 
       {loading ? (
         <p className="text-slate-500">Loading categories…</p>
-      ) : categories.length === 0 ? (
+      ) : tree.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-12 text-center">
           <p className="font-medium text-slate-800">No categories yet</p>
           <p className="mt-1 text-sm text-slate-500">
@@ -83,78 +128,85 @@ export default function AdminCategories() {
           </p>
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-2xl bg-white shadow-sm">
-          <table className="w-full min-w-[640px] text-left text-sm">
-            <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
-              <tr>
-                <th className="px-4 py-3 font-medium">Cover</th>
-                <th className="px-4 py-3 font-medium">Name</th>
-                <th className="px-4 py-3 font-medium">Solutions</th>
-                <th className="px-4 py-3 font-medium">On homepage</th>
-                <th className="px-4 py-3 font-medium">Order</th>
-                <th className="px-4 py-3 text-right font-medium">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {categories.map((category) => {
-                const count = counts[category.slug] || 0;
-                const isDeleting = deletingSlug === category.slug;
-                return (
-                  <tr key={category.slug} className="align-middle">
-                    <td className="px-4 py-3">
-                      {category.coverImage ? (
-                        <img
-                          src={category.coverImage}
-                          alt=""
-                          className="h-12 w-[72px] rounded-md object-cover"
-                        />
-                      ) : (
-                        <div className="h-12 w-[72px] rounded-md bg-slate-100" />
-                      )}
-                    </td>
-                    <td className="px-4 py-3">
-                      <p className="font-medium text-slate-900">{category.name}</p>
-                      <p className="text-xs text-slate-500">{category.slug}</p>
-                    </td>
-                    <td className="px-4 py-3 text-slate-600">{count}</td>
-                    <td className="px-4 py-3">
-                      {category.showOnHome ? (
-                        <span className="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-800">
-                          Shown
-                        </span>
-                      ) : (
-                        <span className="text-slate-400">—</span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3 text-slate-600">{category.order ?? "—"}</td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center justify-end gap-4">
-                        <Link
-                          to={`/admin/categories/${category.slug}/edit`}
-                          className="font-medium text-[#0b1c2c] hover:underline"
-                        >
-                          Edit
-                        </Link>
-                        <button
-                          type="button"
-                          onClick={() => handleDelete(category)}
-                          disabled={isDeleting || count > 0}
-                          title={
-                            count > 0
-                              ? `Move or delete its ${count} solution${count === 1 ? "" : "s"} first`
-                              : undefined
-                          }
-                          className="font-medium text-red-600 hover:underline disabled:cursor-not-allowed disabled:opacity-40 disabled:no-underline"
-                        >
-                          {isDeleting ? "Deleting…" : "Delete"}
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+        <div className="space-y-4">
+          {tree.map((parent) => {
+            const isCollapsed = collapsed.has(parent.slug);
+            return (
+              <div key={parent.slug} className="overflow-hidden rounded-2xl bg-white shadow-sm">
+                {/* Parent row */}
+                <div className="flex items-center gap-3 border-b border-slate-100 bg-slate-50 px-4 py-3">
+                  <button
+                    type="button"
+                    onClick={() => toggleCollapsed(parent.slug)}
+                    aria-label={isCollapsed ? "Expand" : "Collapse"}
+                    className="rounded p-1 text-slate-500 hover:bg-slate-200"
+                  >
+                    <span className={`inline-block transition-transform ${isCollapsed ? "-rotate-90" : ""}`}>
+                      ▾
+                    </span>
+                  </button>
+
+                  {parent.coverImage ? (
+                    <img src={parent.coverImage} alt="" className="h-10 w-14 rounded-md object-cover" />
+                  ) : (
+                    <div className="h-10 w-14 rounded-md bg-slate-200" />
+                  )}
+
+                  <div className="min-w-0 flex-1">
+                    <p className="font-semibold text-slate-900">{parent.name}</p>
+                    <p className="text-xs text-slate-500">
+                      {parent.slug} · {parent.subCategories.length} sub-categor
+                      {parent.subCategories.length === 1 ? "y" : "ies"} · {parentCountFor(parent)} products
+                    </p>
+                  </div>
+
+                  {parent.showOnHome && (
+                    <span className="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-800">
+                      Shown on home
+                    </span>
+                  )}
+
+                  <div className="w-56 shrink-0">
+                    {rowActions(parent, parent.subCategories.length > 0)}
+                  </div>
+                </div>
+
+                {/* Sub-categories */}
+                {!isCollapsed && (
+                  <div className="divide-y divide-slate-100">
+                    {parent.subCategories.length === 0 ? (
+                      <p className="px-4 py-4 text-sm text-slate-400">No sub-categories yet.</p>
+                    ) : (
+                      parent.subCategories.map((cat) => {
+                        const count = subCountFor(cat.slug);
+                        return (
+                          <div key={cat.slug} className="flex items-center gap-3 px-4 py-3 pl-14">
+                            {cat.coverImage ? (
+                              <img src={cat.coverImage} alt="" className="h-9 w-12 rounded-md object-cover" />
+                            ) : (
+                              <div className="h-9 w-12 rounded-md bg-slate-100" />
+                            )}
+                            <div className="min-w-0 flex-1">
+                              <p className="font-medium text-slate-900">{cat.name}</p>
+                              <p className="text-xs text-slate-500">
+                                {cat.slug} · {count} product{count === 1 ? "" : "s"}
+                              </p>
+                            </div>
+                            {cat.showOnHome && (
+                              <span className="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-medium text-amber-800">
+                                Shown
+                              </span>
+                            )}
+                            <div className="w-56 shrink-0">{rowActions(cat, count > 0)}</div>
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

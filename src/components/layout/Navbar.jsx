@@ -3,7 +3,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import logo from "../../assets/images/logo.webp";
 import { useAuth } from "../../context/AuthContext";
-import { getCategories, getPublishedProducts } from "../../lib/firestore";
+import { getCategories, getCategoryTree, getPublishedProducts } from "../../lib/firestore";
 
 const NAV_LINKS = [
   { label: "Home", to: "/" },
@@ -32,14 +32,14 @@ function NavItem({ to, label, onClick }) {
 
 // Shared: categories that actually have at least one published product,
 // sorted by their `order` field.
-function useCategoriesWithProducts() {
-  const [categories, setCategories] = useState([]);
+function useProductCategoryTree() {
+  const [groups, setGroups] = useState([]);
 
   useEffect(() => {
     let cancelled = false;
 
-    Promise.all([getCategories(), getPublishedProducts()])
-      .then(([categoryList, productList]) => {
+    Promise.all([getCategoryTree(), getPublishedProducts()])
+      .then(([tree, productList]) => {
         if (cancelled) return;
 
         const counts = {};
@@ -47,15 +47,18 @@ function useCategoriesWithProducts() {
           if (p.categorySlug) counts[p.categorySlug] = (counts[p.categorySlug] || 0) + 1;
         });
 
-        const withProducts = categoryList
-          .filter((c) => counts[c.slug] > 0)
-          .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+        const grouped = tree
+          .map((parent) => ({
+            ...parent,
+            subCategories: (parent.subCategories || []).filter((c) => counts[c.slug] > 0),
+          }))
+          .filter((parent) => parent.subCategories.length > 0);
 
-        setCategories(withProducts);
+        setGroups(grouped);
       })
       .catch(() => {
         if (cancelled) return;
-        setCategories([]);
+        setGroups([]);
       });
 
     return () => {
@@ -63,12 +66,12 @@ function useCategoriesWithProducts() {
     };
   }, []);
 
-  return categories;
+  return groups;
 }
 
 // Desktop "Products" nav item with a hover/click dropdown of live categories.
 function ProductsDropdown() {
-  const categories = useCategoriesWithProducts();
+  const groups = useProductCategoryTree();
   const [isOpen, setIsOpen] = useState(false);
   const closeTimer = useRef(null);
   const { pathname } = useLocation();
@@ -101,7 +104,7 @@ function ProductsDropdown() {
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full z-50 mt-3 w-64 overflow-hidden rounded-xl border border-brand-navy/10 bg-white py-2 shadow-xl">
+        <div className="absolute left-0 top-full z-50 mt-3 w-80 overflow-hidden rounded-xl border border-brand-navy/10 bg-white py-2 shadow-xl">
           <NavLink
             to="/products"
             onClick={() => setIsOpen(false)}
@@ -110,18 +113,25 @@ function ProductsDropdown() {
             All Products
           </NavLink>
 
-          {categories.length > 0 && <div className="my-1 border-t border-brand-navy/10" />}
+          {groups.length > 0 && <div className="my-1 border-t border-brand-navy/10" />}
 
-          <div className="max-h-72 overflow-y-auto">
-            {categories.map((cat) => (
-              <NavLink
-                key={cat.slug}
-                to={`/products?category=${encodeURIComponent(cat.slug)}`}
-                onClick={() => setIsOpen(false)}
-                className="block px-4 py-2 text-sm text-brand-ink/70 hover:bg-brand-cream/60 hover:text-brand-navy"
-              >
-                {cat.name}
-              </NavLink>
+          <div className="max-h-96 overflow-y-auto">
+            {groups.map((parent, index) => (
+              <div key={parent.slug} className="py-1">
+                <p className="px-4 pt-1.5 pb-1 text-xs font-semibold uppercase tracking-wide text-brand-ink/40">
+                  {index + 1}. {parent.name}
+                </p>
+                {parent.subCategories.map((cat) => (
+                  <NavLink
+                    key={cat.slug}
+                    to={`/products?category=${encodeURIComponent(cat.slug)}`}
+                    onClick={() => setIsOpen(false)}
+                    className="block px-4 py-2 text-sm text-brand-ink/70 hover:bg-brand-cream/60 hover:text-brand-navy"
+                  >
+                    {cat.name}
+                  </NavLink>
+                ))}
+              </div>
             ))}
           </div>
         </div>
@@ -132,14 +142,14 @@ function ProductsDropdown() {
 
 // Mobile "Products" item with an expandable list of categories underneath.
 function MobileProductsSection({ onNavigate }) {
-  const categories = useCategoriesWithProducts();
+  const groups = useProductCategoryTree();
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <div className="py-2">
       <div className="flex items-center justify-between">
         <NavItem to="/products" label="Products" onClick={onNavigate} />
-        {categories.length > 0 && (
+        {groups.length > 0 && (
           <button
             type="button"
             onClick={() => setIsExpanded((v) => !v)}
@@ -154,17 +164,26 @@ function MobileProductsSection({ onNavigate }) {
         )}
       </div>
 
-      {isExpanded && categories.length > 0 && (
-        <div className="mt-1 ml-3 flex max-h-60 flex-col gap-1 overflow-y-auto border-l border-white/10 pl-3">
-          {categories.map((cat) => (
-            <NavLink
-              key={cat.slug}
-              to={`/products?category=${encodeURIComponent(cat.slug)}`}
-              onClick={onNavigate}
-              className="py-1.5 text-sm text-white/70 hover:text-brand-gold"
-            >
-              {cat.name}
-            </NavLink>
+      {isExpanded && groups.length > 0 && (
+        <div className="mt-1 ml-3 flex max-h-72 flex-col gap-2 overflow-y-auto border-l border-white/10 pl-3">
+          {groups.map((parent, index) => (
+            <div key={parent.slug}>
+              <p className="text-xs font-semibold uppercase tracking-wide text-white/40">
+                {index + 1}. {parent.name}
+              </p>
+              <div className="mt-1 flex flex-col gap-1">
+                {parent.subCategories.map((cat) => (
+                  <NavLink
+                    key={cat.slug}
+                    to={`/products?category=${encodeURIComponent(cat.slug)}`}
+                    onClick={onNavigate}
+                    className="py-1 text-sm text-white/70 hover:text-brand-gold"
+                  >
+                    {cat.name}
+                  </NavLink>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       )}

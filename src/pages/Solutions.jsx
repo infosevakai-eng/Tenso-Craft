@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { getCategories, getPublishedProducts } from "../lib/firestore";
+import { getCategoryTree, getPublishedProducts } from "../lib/firestore";
 import SolutionCard from "../components/solutions/SolutionCard";
 
 const PAGE_SIZE = 12;
@@ -12,7 +12,7 @@ const DEFAULT_DESCRIPTION =
 
 export default function Solutions() {
   const [solutions, setSolutions] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [tree, setTree] = useState([]);
   const [status, setStatus] = useState("loading");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
@@ -22,11 +22,11 @@ export default function Solutions() {
   useEffect(() => {
     let cancelled = false;
 
-    Promise.all([getPublishedProducts(), getCategories()])
-      .then(([productList, categoryList]) => {
+    Promise.all([getPublishedProducts(), getCategoryTree()])
+      .then(([productList, categoryTree]) => {
         if (cancelled) return;
         setSolutions(productList);
-        setCategories(categoryList);
+        setTree(categoryTree);
         setStatus("ready");
       })
       .catch(() => {
@@ -39,22 +39,33 @@ export default function Solutions() {
     };
   }, []);
 
-  const chips = useMemo(() => {
+  // Group sub-categories that actually have published products, under their parent.
+  const groups = useMemo(() => {
     const counts = {};
     solutions.forEach((s) => {
       if (s.categorySlug) counts[s.categorySlug] = (counts[s.categorySlug] || 0) + 1;
     });
-    return categories
-      .filter((c) => counts[c.slug] > 0)
-      .map((c) => ({ slug: c.slug, name: c.name, count: counts[c.slug] }));
-  }, [solutions, categories]);
 
-  const activeSlug = categories.some((c) => c.slug === requestedCategory)
-    ? requestedCategory
-    : "";
-  const activeCategory = activeSlug
-    ? categories.find((c) => c.slug === activeSlug)
-    : null;
+    return tree
+      .map((parent) => ({
+        ...parent,
+        subCategories: parent.subCategories
+          .filter((c) => counts[c.slug] > 0)
+          .map((c) => ({ ...c, count: counts[c.slug] })),
+      }))
+      .filter((parent) => parent.subCategories.length > 0);
+  }, [tree, solutions]);
+
+  const allSubCategories = useMemo(
+    () =>
+      groups.flatMap((parent) =>
+        parent.subCategories.map((c) => ({ ...c, parentName: parent.name }))
+      ),
+    [groups]
+  );
+
+  const activeCategory = allSubCategories.find((c) => c.slug === requestedCategory) || null;
+  const activeSlug = activeCategory ? activeCategory.slug : "";
 
   const filtered = activeSlug
     ? solutions.filter((s) => s.categorySlug === activeSlug)
@@ -67,13 +78,13 @@ export default function Solutions() {
   }
 
   const sidebarItemClass = (active) =>
-    `flex w-full items-start justify-between gap-3 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${
+    `flex w-full items-start justify-between gap-3 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
       active
         ? "bg-brand-gold text-brand-navy"
         : "text-brand-ink/70 hover:bg-brand-cream hover:text-brand-navy"
     }`;
 
-  const heroTag = activeCategory ? "Category" : DEFAULT_TAG;
+  const heroTag = activeCategory ? activeCategory.parentName : DEFAULT_TAG;
   const heroTitle = activeCategory ? activeCategory.name : DEFAULT_TITLE;
   const heroDescription =
     activeCategory && activeCategory.description
@@ -99,7 +110,7 @@ export default function Solutions() {
       </section>
 
       {/* Mobile category dropdown — hidden on desktop */}
-      {status === "ready" && chips.length > 0 && (
+      {status === "ready" && groups.length > 0 && (
         <div className="mx-auto max-w-container px-4 pt-8 sm:px-6 md:hidden">
           <label htmlFor="category-select" className="sr-only">
             Filter by category
@@ -112,10 +123,14 @@ export default function Solutions() {
               className="w-full appearance-none rounded-lg border border-brand-navy/15 bg-white px-4 py-3 pr-10 text-sm font-medium text-brand-navy shadow-sm focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold/30"
             >
               <option value="">All Products ({solutions.length})</option>
-              {chips.map((chip) => (
-                <option key={chip.slug} value={chip.slug}>
-                  {chip.name} ({chip.count})
-                </option>
+              {groups.map((parent, index) => (
+                <optgroup key={parent.slug} label={`${index + 1}. ${parent.name}`}>
+                  {parent.subCategories.map((chip) => (
+                    <option key={chip.slug} value={chip.slug}>
+                      {chip.name} ({chip.count})
+                    </option>
+                  ))}
+                </optgroup>
               ))}
             </select>
             <svg
@@ -135,34 +150,37 @@ export default function Solutions() {
       <section className="mx-auto max-w-container px-4 py-16 sm:px-6 lg:px-8">
         <div className="flex gap-10">
           {/* Category sidebar — desktop only */}
-          {status === "ready" && chips.length > 0 && (
+          {status === "ready" && groups.length > 0 && (
             <aside className="hidden w-64 shrink-0 md:block">
-              <div className="sticky top-24 space-y-1">
-                <p className="mb-3 px-4 text-xs font-semibold uppercase tracking-widest text-brand-ink/40">
-                  Categories
-                </p>
+              <div className="sticky top-24 space-y-5">
                 <button
                   type="button"
                   onClick={() => selectCategory("")}
                   className={sidebarItemClass(activeSlug === "")}
                 >
                   <span className="flex-1 text-left leading-snug">All Products</span>
-                  <span className="shrink-0 pt-0.5 text-xs opacity-60">
-                    {solutions.length}
-                  </span>
+                  <span className="shrink-0 pt-0.5 text-xs opacity-60">{solutions.length}</span>
                 </button>
-                {chips.map((chip) => (
-                  <button
-                    key={chip.slug}
-                    type="button"
-                    onClick={() => selectCategory(chip.slug)}
-                    className={sidebarItemClass(activeSlug === chip.slug)}
-                  >
-                    <span className="flex-1 text-left leading-snug">{chip.name}</span>
-                    <span className="shrink-0 pt-0.5 text-xs opacity-60">
-                      {chip.count}
-                    </span>
-                  </button>
+
+                {groups.map((parent, index) => (
+                  <div key={parent.slug}>
+                    <p className="mb-2 px-4 text-sm font-bold uppercase tracking-wide text-brand-navy">
+                      {index + 1}. {parent.name}
+                    </p>
+                    <div className="space-y-1">
+                      {parent.subCategories.map((chip) => (
+                        <button
+                          key={chip.slug}
+                          type="button"
+                          onClick={() => selectCategory(chip.slug)}
+                          className={sidebarItemClass(activeSlug === chip.slug)}
+                        >
+                          <span className="flex-1 text-left leading-snug">{chip.name}</span>
+                          <span className="shrink-0 pt-0.5 text-xs opacity-60">{chip.count}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
             </aside>
@@ -173,10 +191,7 @@ export default function Solutions() {
             {status === "loading" && (
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {Array.from({ length: 8 }).map((_, i) => (
-                  <div
-                    key={i}
-                    className="aspect-[3/4] animate-pulse rounded-2xl bg-brand-cream/60"
-                  />
+                  <div key={i} className="aspect-[3/4] animate-pulse rounded-2xl bg-brand-cream/60" />
                 ))}
               </div>
             )}
@@ -188,9 +203,7 @@ export default function Solutions() {
             )}
 
             {status === "ready" && filtered.length === 0 && (
-              <p className="text-sm text-brand-ink/60">
-                No products found in this category.
-              </p>
+              <p className="text-sm text-brand-ink/60">No products found in this category.</p>
             )}
 
             {status === "ready" && filtered.length > 0 && (

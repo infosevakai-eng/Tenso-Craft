@@ -17,6 +17,7 @@ const EMPTY_VALUES = {
   coverImage: "",
   showOnHome: false,
   order: 1,
+  parentSlug: "",
 };
 
 const cleanName = (text) => String(text ?? "").trim().replace(/\s+/g, " ");
@@ -52,6 +53,7 @@ export default function CategoryForm({
   initialValues,
   isEdit = false,
   takenSlugs = [],
+  parentOptions = [], // top-level categories this one can nest under
   submitLabel = "Save Category",
   saving = false,
   serverError = "",
@@ -194,6 +196,7 @@ export default function CategoryForm({
         coverImage,
         showOnHome: values.showOnHome,
         order: Number(values.order),
+        parentSlug: values.parentSlug,
       });
     } finally {
       setProgress("");
@@ -239,7 +242,32 @@ export default function CategoryForm({
           />
         </Field>
       </div>
-
+      <Field
+        label="Parent category"
+        htmlFor="parentSlug"
+        hint={
+          parentOptions.length > 0
+            ? "Leave as “Top-level” to make this a parent category itself."
+            : "No parent categories exist yet — this will be created as a top-level category."
+        }
+      >
+        <select
+          id="parentSlug"
+          value={values.parentSlug}
+          onChange={(e) => setField("parentSlug", e.target.value)}
+          disabled={parentOptions.length === 0}
+          className={inputClass}
+        >
+          <option value="">— Top-level (no parent) —</option>
+          {parentOptions
+            .filter((p) => p.slug !== values.slug)
+            .map((p) => (
+              <option key={p.slug} value={p.slug}>
+                {p.name}
+              </option>
+            ))}
+        </select>
+      </Field>
       <div className="grid gap-6 sm:grid-cols-2">
         <Field
           label="Display order"

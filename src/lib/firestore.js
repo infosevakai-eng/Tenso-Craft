@@ -309,10 +309,72 @@ export async function getCategoryProductCounts() {
   }, {});
 }
 
+/** Categories with no parent — i.e. top-level parent categories, sorted. */
+export async function getParentCategories() {
+  const all = await getCategories();
+  return all.filter((c) => !c.parentSlug).sort(byOrderThen("name"));
+}
+
+/** Sub-categories under a given parent slug, sorted. */
+export async function getSubCategories(parentSlug) {
+  const all = await getCategories();
+  return all.filter((c) => c.parentSlug === parentSlug).sort(byOrderThen("name"));
+}
+
+/**
+ * All categories as a 2-level tree: [{ ...parent, subCategories: [...] }, ...]
+ * A sub-category whose parentSlug doesn't resolve to a real parent (shouldn't
+ * happen via createCategory/updateCategory) falls back to top-level, defensively.
+ */
+export async function getCategoryTree() {
+  const all = await getCategories();
+  const bySlug = new Map(all.map((c) => [c.slug, c]));
+  const parents = all
+    .filter((c) => !c.parentSlug || !bySlug.has(c.parentSlug))
+    .sort(byOrderThen("name"));
+  return parents.map((parent) => ({
+    ...parent,
+    subCategories: all
+      .filter((c) => c.parentSlug === parent.slug)
+      .sort(byOrderThen("name")),
+  }));
+}
+
 /**
  * Create a category. Slug (= doc id) comes from `data.slug` or the name.
  * The slug is locked afterwards because Cloudinary folder names depend on it.
  */
+// export async function createCategory(data) {
+//   const name = String(data?.name ?? "").trim();
+//   if (!name) throw new Error("Category name is required.");
+//   const slug = assertSlug(data.slug || slugify(name), "category slug");
+
+//   let order = Number(data.order);
+//   if (!Number.isFinite(order)) {
+//     const existing = await getCategories();
+//     order = existing.reduce((max, c) => Math.max(max, Number(c.order) || 0), 0) + 1;
+//   }
+
+//   const ref = doc(db, "categories", slug);
+//   await runTransaction(db, async (tx) => {
+//     const snap = await tx.get(ref);
+//     if (snap.exists()) {
+//       throw new Error(`A category with slug "${slug}" already exists.`);
+//     }
+//     tx.set(ref, {
+//       name,
+//       slug,
+//       description: String(data.description ?? "").trim(),
+//       coverImage: String(data.coverImage ?? "").trim(),
+//       order,
+//       showOnHome: Boolean(data.showOnHome),
+//       createdAt: serverTimestamp(),
+//       updatedAt: serverTimestamp(),
+//     });
+//   });
+//   return slug;
+// }
+
 export async function createCategory(data) {
   const name = String(data?.name ?? "").trim();
   if (!name) throw new Error("Category name is required.");
@@ -324,12 +386,32 @@ export async function createCategory(data) {
     order = existing.reduce((max, c) => Math.max(max, Number(c.order) || 0), 0) + 1;
   }
 
+  const parentSlug = String(data.parentSlug ?? "").trim();
+  if (parentSlug === slug) {
+    throw new Error("A category can't be its own parent.");
+  }
+
   const ref = doc(db, "categories", slug);
+  const parentRef = parentSlug ? doc(db, "categories", parentSlug) : null;
+  let parentName = "";
+
   await runTransaction(db, async (tx) => {
     const snap = await tx.get(ref);
     if (snap.exists()) {
       throw new Error(`A category with slug "${slug}" already exists.`);
     }
+
+    if (parentRef) {
+      const parentSnap = await tx.get(parentRef);
+      if (!parentSnap.exists()) {
+        throw new Error(`Parent category "${parentSlug}" was not found.`);
+      }
+      if (parentSnap.data().parentSlug) {
+        throw new Error("A sub-category can't be nested under another sub-category.");
+      }
+      parentName = parentSnap.data().name;
+    }
+
     tx.set(ref, {
       name,
       slug,
@@ -337,6 +419,8 @@ export async function createCategory(data) {
       coverImage: String(data.coverImage ?? "").trim(),
       order,
       showOnHome: Boolean(data.showOnHome),
+      parentSlug,
+      parentName,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     });
@@ -358,6 +442,20 @@ async function renameCategoryOnProducts(categorySlug, name) {
   }
 }
 
+/** Copy a renamed parent category's name onto all its sub-categories (batches of 400). */
+async function renameCategoryOnSubCategories(parentSlug, name) {
+  const snap = await getDocs(
+    query(categoriesRef, where("parentSlug", "==", parentSlug))
+  );
+  for (let i = 0; i < snap.docs.length; i += 400) {
+    const batch = writeBatch(db);
+    snap.docs.slice(i, i + 400).forEach((d) =>
+      batch.update(d.ref, { parentName: name, updatedAt: serverTimestamp() })
+    );
+    await batch.commit();
+  }
+}
+
 /** Update a category. Slug can't change. Renaming updates the name on its products. */
 export async function updateCategory(slug, data) {
   if (data?.slug && data.slug !== slug) {
@@ -366,6 +464,7 @@ export async function updateCategory(slug, data) {
   const ref = doc(db, "categories", slug);
   const current = await getDoc(ref);
   if (!current.exists()) throw new Error("Category not found.");
+  const currentData = current.data();
 
   const update = { updatedAt: serverTimestamp() };
   if ("name" in data) {
@@ -381,9 +480,38 @@ export async function updateCategory(slug, data) {
     update.order = Number.isFinite(n) ? n : 0;
   }
 
+  if ("parentSlug" in data) {
+    const parentSlug = String(data.parentSlug ?? "").trim();
+    if (parentSlug === slug) {
+      throw new Error("A category can't be its own parent.");
+    }
+    if (parentSlug) {
+      const children = await getSubCategories(slug);
+      if (children.length > 0) {
+        throw new Error(
+          "This category already has sub-categories, so it can't become a sub-category itself."
+        );
+      }
+      const parentSnap = await getDoc(doc(db, "categories", parentSlug));
+      if (!parentSnap.exists()) {
+        throw new Error(`Parent category "${parentSlug}" was not found.`);
+      }
+      if (parentSnap.data().parentSlug) {
+        throw new Error("A sub-category can't be nested under another sub-category.");
+      }
+      update.parentSlug = parentSlug;
+      update.parentName = parentSnap.data().name;
+    } else {
+      update.parentSlug = "";
+      update.parentName = "";
+    }
+  }
+
   await updateDoc(ref, update);
-  if (update.name && update.name !== current.data().name) {
+
+  if (update.name && update.name !== currentData.name) {
     await renameCategoryOnProducts(slug, update.name);
+    await renameCategoryOnSubCategories(slug, update.name);
   }
 }
 
@@ -398,6 +526,17 @@ export async function deleteCategory(slug) {
       `This category still has ${count} product${count === 1 ? "" : "s"}. Move or delete them first.`
     );
   }
+
+  const childSnap = await getCountFromServer(
+    query(categoriesRef, where("parentSlug", "==", slug))
+  );
+  const childCount = childSnap.data().count;
+  if (childCount > 0) {
+    throw new Error(
+      `This category still has ${childCount} sub-categor${childCount === 1 ? "y" : "ies"}. Move or delete them first.`
+    );
+  }
+
   await deleteDoc(doc(db, "categories", slug));
 }
 

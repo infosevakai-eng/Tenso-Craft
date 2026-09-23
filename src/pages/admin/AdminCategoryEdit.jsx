@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import CategoryForm from "../../components/admin/CategoryForm";
-import { createCategory, getCategories, updateCategory } from "../../lib/firestore";
+import {
+  createCategory,
+  getCategories,
+  getParentCategories,
+  updateCategory,
+} from "../../lib/firestore";
 
 // firestore.js throws readable messages for expected problems (duplicate slug,
 // missing name, ...). Anything else (network, permissions) gets a generic text.
@@ -18,6 +23,7 @@ export default function AdminCategoryEdit() {
   const isEdit = Boolean(slug);
 
   const [categories, setCategories] = useState([]);
+  const [parentOptions, setParentOptions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
   const [saving, setSaving] = useState(false);
@@ -26,9 +32,11 @@ export default function AdminCategoryEdit() {
   useEffect(() => {
     let cancelled = false;
 
-    getCategories()
-      .then((list) => {
-        if (!cancelled) setCategories(list);
+    Promise.all([getCategories(), getParentCategories()])
+      .then(([catList, parentList]) => {
+        if (cancelled) return;
+        setCategories(catList);
+        setParentOptions(parentList);
       })
       .catch((err) => {
         console.error(err);
@@ -91,6 +99,7 @@ export default function AdminCategoryEdit() {
       <CategoryForm
         key={existing?.slug ?? "new"}
         isEdit={isEdit}
+        parentOptions={parentOptions.filter((p) => p.slug !== existing?.slug)}
         initialValues={
           existing
             ? {
@@ -100,8 +109,9 @@ export default function AdminCategoryEdit() {
                 coverImage: existing.coverImage ?? "",
                 showOnHome: Boolean(existing.showOnHome),
                 order: existing.order ?? nextOrder,
+                parentSlug: existing.parentSlug ?? "",
               }
-            : { order: nextOrder }
+            : { order: nextOrder, parentSlug: "" }
         }
         takenSlugs={takenSlugs}
         submitLabel={isEdit ? "Save Changes" : "Create Category"}

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, ChevronLeft, ChevronRight, Download } from "lucide-react";
-import { getPublishedProductBySlug, getPublishedProducts } from "../lib/firestore";
+import { ChevronLeft, ChevronRight, Download } from "lucide-react";
+import { getCategory, getPublishedProductBySlug, getPublishedProducts } from "../lib/firestore";
 import { optimizedUrl } from "../lib/cloudinary";
 import { formatPrice } from "../lib/format";
 import SolutionCard from "../components/solutions/SolutionCard";
@@ -13,6 +13,7 @@ export default function SolutionDetail() {
   const [solution, setSolution] = useState(null);
   const [status, setStatus] = useState("loading");
   const [related, setRelated] = useState([]);
+  const [categoryInfo, setCategoryInfo] = useState(null);
   const [activeImage, setActiveImage] = useState(0);
   const scrollerRef = useRef(null);
 
@@ -20,6 +21,7 @@ export default function SolutionDetail() {
     let cancelled = false;
     setStatus("loading");
     setRelated([]);
+    setCategoryInfo(null);
     setActiveImage(0);
 
     // Returns null for missing AND draft products, so drafts show "not found".
@@ -47,6 +49,14 @@ export default function SolutionDetail() {
             .catch(() => {
               if (cancelled) return;
               setRelated([]);
+            });
+
+          getCategory(data.categorySlug)
+            .then((cat) => {
+              if (!cancelled) setCategoryInfo(cat);
+            })
+            .catch(() => {
+              if (!cancelled) setCategoryInfo(null);
             });
         }
       })
@@ -132,13 +142,30 @@ export default function SolutionDetail() {
   return (
     <main>
       <section className="mx-auto max-w-container px-4 py-12 sm:px-6 lg:px-8">
-        <Link
-          to="/products"
-          className="inline-flex items-center gap-1.5 text-sm text-brand-ink/60 hover:text-brand-navy"
-        >
-          <ArrowLeft className="h-4 w-4" strokeWidth={2} />
-          Back to all products
-        </Link>
+        <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1.5 text-sm text-brand-ink/60">
+          <Link to="/products" className="hover:text-brand-navy">
+            Products
+          </Link>
+          {categoryInfo?.parentName && (
+            <>
+              <span aria-hidden="true">/</span>
+              <span>{categoryInfo.parentName}</span>
+            </>
+          )}
+          {solution.categorySlug && (
+            <>
+              <span aria-hidden="true">/</span>
+              <Link
+                to={`/products?category=${encodeURIComponent(solution.categorySlug)}`}
+                className="hover:text-brand-navy"
+              >
+                {solution.category}
+              </Link>
+            </>
+          )}
+          <span aria-hidden="true">/</span>
+          <span className="text-brand-navy">{solution.title}</span>
+        </nav>
 
         {/* Product-style layout: images left, content right */}
         <div className="mt-6 grid gap-10 lg:grid-cols-2 lg:items-start">
@@ -167,11 +194,10 @@ export default function SolutionDetail() {
                     onClick={() => setActiveImage(index)}
                     aria-label={`Show image ${index + 1}`}
                     aria-current={index === activeImage ? "true" : undefined}
-                    className={`h-16 w-24 flex-none overflow-hidden rounded-lg border-2 transition-colors ${
-                      index === activeImage
+                    className={`h-16 w-24 flex-none overflow-hidden rounded-lg border-2 transition-colors ${index === activeImage
                         ? "border-brand-gold"
                         : "border-transparent opacity-70 hover:opacity-100"
-                    }`}
+                      }`}
                   >
                     <img
                       src={optimizedUrl(url)}
