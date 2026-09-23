@@ -92,7 +92,15 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 border-t border-white/10 pt-6 text-center text-xs text-white/40">
-          © {year} Tenso Craft. All rights reserved.
+          © {year} Tenso Craft. All rights reserved. Created by{" "}
+          <a
+            href="https://www.digitalsevakai.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white/60 hover:text-white transition-colors"
+          >
+            Digital Sevak AI
+          </a>
         </div>
       </div>
     </footer>
